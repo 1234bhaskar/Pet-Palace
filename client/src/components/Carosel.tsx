@@ -14,7 +14,7 @@ import Image from "next/image"
 
 export function CarouselPlugin() {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 2000, stopOnInteraction: false ,playOnInit:true})
   )
 
  const imageArray =[
@@ -24,6 +24,7 @@ export function CarouselPlugin() {
  ]
 
   return (
+    <div>
     <Carousel
       plugins={[plugin.current]}
       className="w-full "
@@ -46,5 +47,10 @@ export function CarouselPlugin() {
       <CarouselPrevious />
       <CarouselNext />
     </Carousel>
+
+    <div className="w-full flex justify-center">
+      <Image src={"https://supertails.com/cdn/shop/files/Homepage_desk-min_6cc3f188-7997-40b9-a41f-40eaf4bdf427_1600x.png?v=1723351099"} alt="Bank"   height={100} width={1500}></Image>
+    </div>
+    </div>
   )
 }
