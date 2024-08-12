@@ -4,6 +4,7 @@ import {
   Menu,
   Package2,
   Search,
+  PawPrint
 } from "lucide-react";
 
 
@@ -66,21 +67,21 @@ import { AccordionDemo } from "./Accordion";
 export function Dashboard() {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
+        <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-4">
           <Link
             href="#"
-            className="flex items-center gap-2 text-lg font-semibold md:text-base"
+            className="flex items-center gap-2 text-lg font-semibold md:text-base "
           >
-            <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <PawPrint className=" w-10 text-orange-900" />
+            <span>Pet Palace</span>
           </Link>
-          <Link
+          {/* <Link
             href="#"
-            className="text-foreground transition-colors hover:text-foreground"
+            className="text-foreground transition-colors hover:text-foreground border px-5"
           >
-            Dashboard
-          </Link>
+            Pet Palace
+          </Link> */}
           <Link
             href="#"
             className="text-muted-foreground transition-colors hover:text-foreground"
@@ -118,8 +119,8 @@ export function Dashboard() {
                 href="#"
                 className="flex items-center gap-2 text-lg font-semibold"
               >
-                <Package2 className="h-6 w-6" />
-                <span className="sr-only">Acme Inc</span>
+              <PawPrint className=" text-orange-900" />
+            <span>Pet Palace</span>
               </Link>
               <Link href="#" className="hover:text-foreground">
                 Dashboard
