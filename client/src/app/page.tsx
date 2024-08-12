@@ -1,4 +1,4 @@
-"use client "
+"use client"
 
 import { CarouselPlugin } from "@/components/Carosel";
 import {Categories} from "@/components/HomePage/Categories";
