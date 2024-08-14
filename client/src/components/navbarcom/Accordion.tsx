@@ -4,12 +4,17 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion"
+import { FC } from "react";
   
-  export function AccordionDemo() {
+  interface AccordionProps{
+    title:string;
+  }
+  
+  export const AccordionDemo:FC<AccordionProps>=(props)=> {
     return (
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
-          <AccordionTrigger>Categories</AccordionTrigger>
+          <AccordionTrigger>{props.title}</AccordionTrigger>
           <AccordionContent>
             food
           </AccordionContent>

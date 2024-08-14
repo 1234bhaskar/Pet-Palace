@@ -9,6 +9,7 @@ const nextConfig = {
         // pathname: "/cdn/shop",
       },
     ],
+    domains: ["assets.aceternity.com","m.media-amazon.com"]
   },
 };
 

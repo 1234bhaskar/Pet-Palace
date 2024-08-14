@@ -1,4 +1,5 @@
 import { GridBackgroundDemo } from "@/components/background";
+import { ModeToggle } from "@/components/navbarcom/dark-light-mode";
 import { SignUpComponent } from "@/components/signupform";
 import { FlipWords } from "@/components/ui/flip-words";
 
@@ -8,8 +9,9 @@ export default function SignUp() {
     return(
         <div >
             <GridBackgroundDemo>
-            <div  className="relative">
+            <div  className="">
             </div>
+            <div className="absolute top-0 right-0"><ModeToggle/></div>
             <div className="md:grid md:grid-cols-12 h-screen w-screen md:divide-x md:divide-slate-500 md:px-20  ">
                 <div className= "hidden  md:col-span-8 md:block ">
                     {/* <LampDemo/> */}

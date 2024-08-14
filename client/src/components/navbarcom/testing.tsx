@@ -70,7 +70,7 @@ export function Dashboard() {
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-4">
           <Link
-            href="#"
+            href="/"
             className="flex items-center gap-2 text-lg font-semibold md:text-base "
           >
             <PawPrint className=" w-10 text-orange-900" />
@@ -131,7 +131,7 @@ export function Dashboard() {
               >
                 Orders
               </Link>
-              <AccordionDemo/>
+              <AccordionDemo title="Categories"/>
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
