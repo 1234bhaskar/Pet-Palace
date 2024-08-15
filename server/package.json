@@ -18,8 +18,11 @@
   "dependencies": {
     "@apollo/server": "^4.11.0",
     "@prisma/client": "^5.18.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "axios": "^1.7.4",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
-    "graphql": "^16.9.0"
+    "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }
