@@ -65,7 +65,7 @@ export default function Filters() {
               >
                 Orders
               </Link>
-              <AccordionDemo/>
+              
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
