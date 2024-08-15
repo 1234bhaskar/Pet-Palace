@@ -131,7 +131,7 @@ export function Dashboard() {
               >
                 Orders
               </Link>
-              <AccordionDemo/>
+              <AccordionDemo title="Categories"/>
               <Link
                 href="#"
                 className="text-muted-foreground hover:text-foreground"
