@@ -5,7 +5,7 @@ import "./globals.css";
 import { Inter as FontSans } from "next/font/google"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
-
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 
 const fontSans = FontSans({
@@ -31,7 +31,7 @@ export default function RootLayout({
           "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
-      >
+      ><GoogleOAuthProvider clientId={"733987111751-um6k4ikd9m38qfvhk9ansu8hv2skibfn.apps.googleusercontent.com"}>
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -40,6 +40,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          </GoogleOAuthProvider>
       </body>
     </html>
   );
