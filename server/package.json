@@ -1,0 +1,25 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Backend For Ecommerce PetPalace",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build/index",
+    "build": "tsc -p .",
+    "dev": "tsc-watch --Onsuccess \"npm start\""
+  },
+  "author": "Bhaskar",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^5.18.0",
+    "tsc-watch": "^6.2.0",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.11.0",
+    "@prisma/client": "^5.18.0",
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2",
+    "graphql": "^16.9.0"
+  }
+}
