@@ -1,6 +1,8 @@
+"use client"
 import {ExpandableCardDemo} from "@/components/blocks/expandable-card-demo-standard";
 import { AccordionDemo } from "@/components/navbarcom/Accordion";
 import { Dashboard } from "@/components/navbarcom/testing";
+import { useGetCurrentUser } from "../../../hooks/user";
 
 interface Productprops {
     title: string;
@@ -24,15 +26,17 @@ const products:Productprops[] = [ {
 
 
 export default function Order() {
+  const {user}=useGetCurrentUser();
+
     return(
         <div className=" flex flex-col">
-            <div className="h-10"><Dashboard/></div> {/* navbar */}
+            <div className="h-10"><Dashboard name={user?.firstName as string}/></div> {/* navbar */}
             
             <div className="text-4xl font-medium md:text-7xl md:ml-10 md:mt-10 text-slate-800 dark:text-slate-300 ">Cart</div>
 
             <div className="md:grid md:grid-cols-12 md:mt-20" >
                 
-                <div className="md:col-span-8 mr-6">{products.map((product:Productprops) => ( <ExpandableCardDemo product={product} /> ))}</div>
+                <div className="md:col-span-8 mr-6">{products.map((product:Productprops,index: number) => ( <ExpandableCardDemo key={index}  product={product} /> ))}</div>
 
                 <div className="md:col-span-4 md:m-6 ">
                     <div className="text-3xl">Total Price</div>

@@ -4,13 +4,16 @@ import { ButtonComponent } from "@/components/button";
 import { CarouselDApiDemo } from "@/components/Carousel";
 import { Dashboard } from "@/components/navbarcom/testing";
 import { CiStar } from "react-icons/ci";  
+import { useGetCurrentUser } from "../../../hooks/user";
 
 
 export default function Order() {
+  const {user}=useGetCurrentUser();
+
 
   return (
     <>
-      <div className="h-10"><Dashboard/></div>
+      <div className="h-10"><Dashboard name={user?.firstName as string}/></div>
       <p className="text-black mt-[100px]"> </p>
       <div className="flex flex-col  md:justify-around md:gap-10 md:flex-row  ">
 

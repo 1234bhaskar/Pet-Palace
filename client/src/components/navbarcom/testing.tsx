@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import {
   CircleUser,
@@ -5,7 +7,7 @@ import {
   Package2,
   Search,
   PawPrint
-} from "lucide-react";
+} from "lucide-react";  
 
 
 
@@ -63,8 +65,13 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dropdowntest } from "./dropdown";
 import { ModeToggle } from "./dark-light-mode";
 import { AccordionDemo } from "./Accordion";
+import { FC } from "react";
 
-export function Dashboard() {
+interface Dashboardprops{
+  name:string
+}
+
+export const Dashboard:FC<Dashboardprops>=(props) =>{
   return (
     <div className="flex min-h-screen w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
@@ -168,7 +175,7 @@ export function Dashboard() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuLabel>{props.name}</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>

@@ -1,15 +1,45 @@
 "use client"
 import { GridBackgroundDemo } from "@/components/background";
 import { ModeToggle } from "@/components/navbarcom/dark-light-mode";
-import { SignUpComponent } from "@/components/signupform";
 import { FlipWords } from "@/components/ui/flip-words";
-import { useGoogleLogin } from '@react-oauth/google';
+import toast from "react-hot-toast";
+import {  TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import { useCallback } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { graphqlClient } from "../../../GraphqlClient/api";
+import { verifyGoogleTokenQuery } from "../../../graphql/query/user";
+import { useRouter  } from "next/navigation";
+
+
 
 export default function SignUp() {
-    const words = ["Delight ", "Treat ", "Comfort ", "Cherish ","Celebrate "];
-    const login = useGoogleLogin({
-        onSuccess: tokenResponse => console.log(tokenResponse),
+    const router = useRouter();
+    
+    const handleLogin = useCallback(async(cred:TokenResponse) => {
+        // console.log(cred.access_token);
+        const googleToken = cred.access_token;
+        if(!googleToken) return toast.error("Login failed");
+        try{
+            const {verifyGoogleToken}=await graphqlClient.request(verifyGoogleTokenQuery,{token:googleToken});
+            toast.success("Verified Success");
+            console.log(`token-> ${verifyGoogleToken}`);
+            console.log(toast);
+            
+            if (verifyGoogleToken) {
+                window.localStorage.setItem("_Pet_Palace", verifyGoogleToken);
+                router.push("/"); 
+            }
+        }
+        catch (error) {
+            toast.error("Verification failed");
+            console.error(error);
+        } 
+    }, [graphqlClient]);
+
+    const words = ["Delight ", "Treat ", "Comfort ", "Cherish ", "Celebrate "];
+
+    const login = useGoogleLogin({  
+        onSuccess: tokenResponse  => handleLogin(tokenResponse),
         onError: error => console.log('Login Failed:', error),
     });
     return(
