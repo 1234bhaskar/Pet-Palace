@@ -16,6 +16,37 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type CreatingProductData = {
+  categoryIds: Array<Scalars['Int']['input']>;
+  description: Scalars['String']['input'];
+  images?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  price: Scalars['Int']['input'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createProduct: Scalars['Boolean']['output'];
+};
+
+
+export type MutationCreateProductArgs = {
+  payload: CreatingProductData;
+};
+
+export type Product = {
+  __typename?: 'Product';
+  categories?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+  description: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  images?: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  price: Scalars['Float']['output'];
+  seller: User;
+  sellerId: Scalars['String']['output'];
+  stock: Scalars['Boolean']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getCurrentUser?: Maybe<User>;
@@ -36,6 +67,13 @@ export type User = {
   profileImageURL?: Maybe<Scalars['String']['output']>;
 };
 
+export type CreateProductMutationVariables = Exact<{
+  payload: CreatingProductData;
+}>;
+
+
+export type CreateProductMutation = { __typename?: 'Mutation', createProduct: boolean };
+
 export type VerifyGoogleTokenQueryVariables = Exact<{
   token: Scalars['String']['input'];
 }>;
@@ -49,5 +87,6 @@ export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', id: string, lastName?: string | null, firstName: string, profileImageURL?: string | null } | null };
 
 
+export const CreateProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatingProductData"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProduct"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<CreateProductMutation, CreateProductMutationVariables>;
 export const VerifyGoogleTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VerifyGoogleToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyGoogleToken"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}}]}]}}]} as unknown as DocumentNode<VerifyGoogleTokenQuery, VerifyGoogleTokenQueryVariables>;
 export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageURL"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
