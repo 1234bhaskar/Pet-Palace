@@ -40,7 +40,7 @@ model Product {
   categories  Category[]
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  images      String?
+  images      String[]
   sellerId    String
   seller      User       @relation("SellerProducts", fields: [sellerId], references: [id])
 }
