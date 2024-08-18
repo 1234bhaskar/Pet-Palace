@@ -1,3 +1,5 @@
+import { Category } from "@prisma/client";
+
 export interface JWTUser{
     id:string,
     email:string,
@@ -5,4 +7,13 @@ export interface JWTUser{
 }
 export interface GraphqlContext{
     user?:JWTUser;
+}
+
+export interface CreateProductPayload{
+    name:string,
+    description:string,
+    price:number,
+    categoryIds: number[],
+    images:string
+    sellerId:string
 }
