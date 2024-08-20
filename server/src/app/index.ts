@@ -18,7 +18,9 @@ export async function initServer(){
         ${Seller.types}
 
         type Query{
-        ${User.queries}}
+        ${User.queries}
+        ${Seller.queries}
+        }
 
         type Mutation{
             ${Seller.muataion}
@@ -30,6 +32,7 @@ export async function initServer(){
         resolvers:{
             Query:{
                 ...User.resolvers.queries,
+                ...Seller.resolvers.queries,
             },
             Mutation:{
                 ...Seller.resolvers.mutations,
