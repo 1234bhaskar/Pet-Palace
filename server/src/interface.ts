@@ -13,7 +13,7 @@ export interface CreateProductPayload{
     name:string,
     description:string,
     price:number,
-  categoryIds: number[],
+    categoryIds: number[],
     images:string
     sellerId:string
 }
