@@ -1,6 +1,13 @@
 import React, { useCallback, useState } from "react";
 import { Button } from "../ui/button";
 import { useCreateProduct } from "../../../hooks/seller";
+import { CiImageOn } from "react-icons/ci";
+import toast from "react-hot-toast";
+import axios from "axios"
+import Image from "next/image";
+import { graphqlClient } from "../../../GraphqlClient/api";
+import { getSignedURLForProductQuery } from "../../../graphql/query/seller";
+import { NextURL } from "next/dist/server/web/next-url";
 
 interface Category {
     id: number;
@@ -18,6 +25,7 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
     const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
     const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
     const [productName, setProductName] = useState<string>("");
+    const [imageURLs, setImageURLs] = useState<string[]>([]);
     const [productDesc, setproductDesc] = useState<string>("");
     const [productPrice, setProductPrice] = useState<number>();
     const [productStock, setProductStock] = useState<string>("");
@@ -52,24 +60,83 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
         console.log("Product Name:", productName);
         console.log("Product Price:", productPrice);
         console.log("Product Stock:", productStock);
+        console.log("Product Url:", imageURLs);
 
         mutate({
             name: productName,
             categoryIds: selectedCategoryIds,
             description: productDesc,
-            price: Number(productPrice)
+            price: Number(productPrice),
+            images:imageURLs
         })
         setProductName("")
         setProductPrice(undefined)
         setProductStock("")
         setproductDesc("")
+        setImageURLs([])
         setSelectedCategoryIds([])
-    },[productName,productPrice,productStock,selectedCategoryIds])
+    },[productName,productPrice,productStock,selectedCategoryIds,imageURLs])
+
+
+    const handlerInputChangeFile = useCallback((input: HTMLInputElement) => {
+
+        return async (event: Event) => {
+    
+        event?.preventDefault();
+    
+        const files: FileList | null | undefined = input.files;
+        if (!files) return;
+    
+        const uploadPromises = Array.from(files).map(async (file) => {
+            console.log(file);
+    
+            // Request signed URL for each file
+            const { getSignedURLForProduct } = await graphqlClient.request(getSignedURLForProductQuery, {
+                imageName: file.name,
+                imageType: file.type,
+            });
+    
+            console.log(getSignedURLForProduct);
+    
+            if (getSignedURLForProduct) {
+                toast.loading("Uploading...", { id: '2' });
+    
+              // Upload each file to S3
+            await axios.put(getSignedURLForProduct, file, {
+                headers: {
+                    "Content-Type": file.type,
+                },
+            });
+    
+            toast.success("Upload Complete", { id: '2' });
+    
+            const url = new NextURL(getSignedURLForProduct);
+            const myfilepath = `${url.origin}${url.pathname}`;
+              // Optionally store or handle the URL of each uploaded file
+            setImageURLs(prev => [...prev, myfilepath]);
+            }
+        });
+    
+        await Promise.all(uploadPromises);
+        }
+    }, []);
+
+    const handleSelectImage = useCallback(() => {
+        const input = document.createElement("input");
+        input.setAttribute("type", "file");
+        input.setAttribute("accept", "image/*");
+        input.setAttribute("multiple", "true"); // Allow multiple file selection
+    
+        const handlerFn = handlerInputChangeFile(input);
+
+        input.addEventListener("change", handlerFn);
+    
+        input.click();
+    }, []);
 
 
     return (
         <div className="md:grid md:grid-cols-12">
-            <div className="col-span-4"></div>
             <div className="flex flex-col gap-3 md:col-span-5">
                 <textarea
                     value={productName}
@@ -104,6 +171,7 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
                     className="border-b border-slate-700 text-xl resize-none focus:outline-none focus:border-blue-500"
                 ></textarea>
                 <div className="flex flex-wrap">
+                <CiImageOn onClick={handleSelectImage} className="text-2xl hover:text-blue-300" />
                 {categories.map((category) => (
                         <div key={category.id} className="flex items-center mb-4 ml-10">
                             <label className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -125,7 +193,11 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
                     </Button>
                 </div>
             </div>
-            <div className="col-span-3"></div>
+            <div className="col-span-7">
+            <div className="grid grid-cols-3 ">
+                {imageURLs && imageURLs.map(imageURL => { return(<div className="col-span-1"><Image src={imageURL} alt="tweet-image" height={400} width={400}/> </div>)})}
+            </div>
+            </div>
         </div>
     );
 };

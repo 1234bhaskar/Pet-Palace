@@ -14,7 +14,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n    #graphql\n    mutation CreateProduct($payload: CreatingProductData!) {\n        createProduct(payload: $payload)\n    }\n": types.CreateProductDocument,
-    "\n    #graphql\n    query VerifyGoogleToken($token: String!) {\n        verifyGoogleToken(token: $token)\n    }\n": types.VerifyGoogleTokenDocument,
+    "\n    #graphql\n    query GetSignedURLForProduct($imageName: String!, $imageType: String!) {\n        getSignedURLForProduct(imageName: $imageName, imageType: $imageType)\n    }     \n": types.GetSignedUrlForProductDocument,
+    "\n    #graphql\n    query VerifyGoogleToken($token: String!,$role: String) {\n        verifyGoogleToken(token: $token,role: $role)\n    }\n": types.VerifyGoogleTokenDocument,
     "\n    #graphql\n    query GetCurrentUser {\n        getCurrentUser {\n            id\n            lastName\n            firstName\n            profileImageURL\n        }\n    }      \n": types.GetCurrentUserDocument,
 };
 
@@ -39,7 +40,11 @@ export function graphql(source: "\n    #graphql\n    mutation CreateProduct($pay
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    #graphql\n    query VerifyGoogleToken($token: String!) {\n        verifyGoogleToken(token: $token)\n    }\n"): (typeof documents)["\n    #graphql\n    query VerifyGoogleToken($token: String!) {\n        verifyGoogleToken(token: $token)\n    }\n"];
+export function graphql(source: "\n    #graphql\n    query GetSignedURLForProduct($imageName: String!, $imageType: String!) {\n        getSignedURLForProduct(imageName: $imageName, imageType: $imageType)\n    }     \n"): (typeof documents)["\n    #graphql\n    query GetSignedURLForProduct($imageName: String!, $imageType: String!) {\n        getSignedURLForProduct(imageName: $imageName, imageType: $imageType)\n    }     \n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    #graphql\n    query VerifyGoogleToken($token: String!,$role: String) {\n        verifyGoogleToken(token: $token,role: $role)\n    }\n"): (typeof documents)["\n    #graphql\n    query VerifyGoogleToken($token: String!,$role: String) {\n        verifyGoogleToken(token: $token,role: $role)\n    }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

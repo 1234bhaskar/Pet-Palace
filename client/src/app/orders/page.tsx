@@ -18,7 +18,7 @@ export default function Order() {
       <div className="flex flex-col  md:justify-around md:gap-10 md:flex-row  ">
 
 
-        <div className="z-[-1]"> <CarouselDApiDemo/>  </div>
+        <div className=""> <CarouselDApiDemo/>  </div>
 
 
           <div className="flex flex-col gap-4 md:w-[40%]">

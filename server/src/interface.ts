@@ -14,6 +14,6 @@ export interface CreateProductPayload{
     description:string,
     price:number,
     categoryIds: number[],
-    images:string
+    images:string[]
     sellerId:string
 }
