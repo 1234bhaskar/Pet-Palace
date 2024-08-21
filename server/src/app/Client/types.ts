@@ -1,14 +1,5 @@
 export const types=`#graphql
-
- input CreatingProductData{
-    name:String!
-    description:String!
-    price:Int!
-    categoryIds: [Int!]!   
-    images:[String]
-
- }
-type Product{
+    type Product{
     id:ID!
     name:String!
     description:String!

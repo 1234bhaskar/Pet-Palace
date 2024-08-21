@@ -7,6 +7,7 @@ import cors from 'cors'
 import { GraphqlContext } from "../interface";
 import JWTService from "../services/jwt";
 import { Seller } from "./seller";
+import { Client } from "./Client";
 
 export async function initServer(){
     const app=express();
@@ -14,12 +15,14 @@ export async function initServer(){
     app.use(bodyParser.json());
     const graphqlServer=new ApolloServer<GraphqlContext>({
         typeDefs:`
-        ${User.types}
-        ${Seller.types}
+            ${User.types}
+            ${Seller.types}
+            ${Client.types}
 
         type Query{
-        ${User.queries}
-        ${Seller.queries}
+            ${User.queries}
+            ${Seller.queries}
+            ${Client.queries}
         }
 
         type Mutation{
@@ -33,6 +36,7 @@ export async function initServer(){
             Query:{
                 ...User.resolvers.queries,
                 ...Seller.resolvers.queries,
+                ...Client.resolver.queries
             },
             Mutation:{
                 ...Seller.resolvers.mutations,
