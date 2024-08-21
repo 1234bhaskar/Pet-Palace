@@ -2,8 +2,8 @@ import { graphql } from "../../gql";
 
 export const verifyGoogleTokenQuery=graphql(`
     #graphql
-    query VerifyGoogleToken($token: String!) {
-        verifyGoogleToken(token: $token)
+    query VerifyGoogleToken($token: String!,$role: String) {
+        verifyGoogleToken(token: $token,role: $role)
     }
 `)
 

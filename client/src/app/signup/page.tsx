@@ -9,18 +9,41 @@ import { FcGoogle } from "react-icons/fc";
 import { graphqlClient } from "../../../GraphqlClient/api";
 import { verifyGoogleTokenQuery } from "../../../graphql/query/user";
 import { useRouter  } from "next/navigation";
+import {  ComboboxDemo } from "@/components/combobox/page";
+import React from "react";
 
 
+const Role = [
+    {
+        value: "Client",
+        label: "Client",
+    },
+    {
+        value: "Seller",
+        label: "Seller",
+    },
+    {
+        value: "Admin",
+        label: "Admin",
+    },
+    
+    ]
 
 export default function SignUp() {
-    const router = useRouter();
     
-    const handleLogin = useCallback(async(cred:TokenResponse) => {
-        // console.log(cred.access_token);
-        const googleToken = cred.access_token;
-        if(!googleToken) return toast.error("Login failed");
-        try{
-            const {verifyGoogleToken}=await graphqlClient.request(verifyGoogleTokenQuery,{token:googleToken});
+  const [value, setValue] = React.useState(Role[0].label)
+  
+  const router = useRouter();
+  
+  console.log(value);
+  const handleLogin = useCallback(async(cred:TokenResponse) => {
+      // console.log(cred.access_token);
+      const googleToken = cred.access_token;
+      if(!googleToken) return toast.error("Login failed");
+      try{
+          const {verifyGoogleToken}=await graphqlClient.request(verifyGoogleTokenQuery,{token:googleToken,role:value});
+          
+          console.log(value);
             toast.success("Verified Success");
             console.log(`token-> ${verifyGoogleToken}`);
             console.log(toast);
@@ -34,7 +57,7 @@ export default function SignUp() {
             toast.error("Verification failed");
             console.error(error);
         } 
-    }, [graphqlClient]);
+    }, [graphqlClient,value]);
 
     const words = ["Delight ", "Treat ", "Comfort ", "Cherish ", "Celebrate "];
 
@@ -59,7 +82,7 @@ export default function SignUp() {
                         </div>
                     </div>
                 </div>
-                <div className="md:col-span-4 h-screen flex items-center justify-center">
+                <div className="md:col-span-4 h-screen flex md:flex-col gap-4 items-center justify-center">
                     <div>
                         {/* <SignUpComponent/> */}
                         <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input ">
@@ -71,6 +94,9 @@ export default function SignUp() {
                         </button>
                         
                         </div>
+                    </div>
+                    <div>
+                        <ComboboxDemo Role={Role} value={value} setValue={setValue} />
                     </div>
                 </div>
             </div>

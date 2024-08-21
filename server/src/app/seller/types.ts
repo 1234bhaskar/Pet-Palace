@@ -5,7 +5,7 @@ export const types=`#graphql
     description:String!
     price:Int!
     categoryIds: [Int!]!   
-    images:String
+    images:[String]
 
  }
 type Product{
@@ -15,7 +15,7 @@ type Product{
   price:Float!
   stock:Boolean!
   categories:[String]          
-  images:String
+  images:[String]
   sellerId:String!
   seller:User!
 }
