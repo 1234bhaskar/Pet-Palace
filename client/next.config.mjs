@@ -15,7 +15,7 @@ const nextConfig = {
         // pathname: "/cdn/shop",
       },
     ],
-    domains: ["assets.aceternity.com","m.media-amazon.com"]
+    domains: ["assets.aceternity.com","m.media-amazon.com","krishna-twitter-dev.s3.ap-south-1.amazonaws.com"]
   },
 };
 

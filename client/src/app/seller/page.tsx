@@ -6,14 +6,15 @@ import { useGetCurrentUser } from "../../../hooks/user";
 import CategoryCheckboxes from "@/components/radioButton/page";
 
 interface Category {
-    id?: number;
+    id: number;
     name: string;
 }
 
 const categories: Category[] = [
-    { id: 1, name: "Electronics" },
-    { id: 2, name: "Books" },
-    { id: 3, name: "Clothing" },
+    { id: 1, name: "Dog" },
+    { id: 2, name: "Cat" },
+    { id: 3, name: "Cloths" },
+    { id: 4, name: "Toy" },
 ];
 
 export default function ProductPage() {
