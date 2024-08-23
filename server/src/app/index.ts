@@ -40,8 +40,8 @@ export async function initServer(){
             },
             Mutation:{
                 ...Seller.resolvers.mutations,
-            }
-
+            },
+            ...Client.resolver.extraResolver
         },
     })
 
