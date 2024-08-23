@@ -1,13 +1,20 @@
-// import { graphql } from "../../gql";
+ import { graphql } from "../../gql";
 
-// export const GetProductsQuery=graphql(`
-//     #graphql
-//     query GetProducts {
-//         getProducts {
-//             name
-//             seller {
-//                 firstName
-//             }
-//         }
-//     }    
-// `)
+export const getAllProductQuery = graphql(`
+    #graphql
+     query GetAllProduct {
+     getAllProduct {
+    id
+    name
+    price
+    description
+    images
+    seller {
+      firstName
+      lastName
+    }
+  }
+}  
+    `)
+
+    
