@@ -4,7 +4,7 @@ import { ButtonComponent } from "@/components/button";
 import { CarouselDApiDemo } from "@/components/Carousel";
 import { Dashboard } from "@/components/navbarcom/testing";
 import { CiStar } from "react-icons/ci";  
-import { useGetCurrentUser } from "../../../hooks/user";
+import { useGetCurrentUser } from "@/../../hooks/user";
 
 
 export default function Order() {
