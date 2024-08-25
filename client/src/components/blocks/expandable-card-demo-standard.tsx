@@ -15,10 +15,11 @@ function truncateSentence(sentence:string) {
   }
 }
 interface Productprops {
-  title: string;
-  description: string;
+  name: string;
+  description?: string;
   price: number;
-  imageURL:string
+  imageURL?:string;
+  quantity:number
 }
 
 interface Products{
@@ -28,7 +29,7 @@ interface Products{
 export const ExpandableCardDemo:FC<Products>=(props) =>{
   const cards = [ 
     {
-      title: truncateSentence(props.product.title),
+      name: truncateSentence(props.product.name),
       src: `${props.product.imageURL}`,
       ctaText: `$ ${props.product.price }`,
       ctaLink: "https://ui.aceternity.com/templates",
@@ -82,7 +83,7 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
         {active && typeof active === "object" ? (
           <div className="fixed inset-0  grid place-items-center z-[100]">
             <motion.button
-              key={`button-${active.title}-${id}`}
+              key={`button-${active.name}-${id}`}
               layout
               initial={{
                 opacity: 0,
@@ -102,29 +103,29 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
               <CloseIcon />
             </motion.button>
             <motion.div
-              layoutId={`card-${active.title}-${id}`}
+              layoutId={`card-${active.name}-${id}`}
               ref={ref}
               className="w-full max-w-[500px]  h-full md:h-fit md:max-h-[90%]  flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
             >
-              <motion.div layoutId={`image-${active.title}-${id}`}>
-                <Image
+              <motion.div layoutId={`image-${active.name}-${id}`}>
+                {props.product.imageURL && (<Image
                   priority
                   width={200}
                   height={200}
                   src={active.src}
-                  alt={active.title}
+                  alt={active.name}
                   className="w-full h-80 lg:h-80 sm:rounded-tr-lg sm:rounded-tl-lg object-cover object-top"
-                />
+                />)}
               </motion.div>
 
               <div>
                 <div className="flex justify-between items-start p-4">
                   <div className="">
                     <motion.h3
-                      layoutId={`title-${active.title}-${id}`}
+                      layoutId={`name-${active.name}-${id}`}
                       className="font-bold text-neutral-700 dark:text-neutral-200"
                     >
-                      {active.title}
+                      {active.name}
                     </motion.h3>
                     {/* <motion.p
                       layoutId={`description-${active.description}-${id}`}
@@ -135,7 +136,7 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
                   </div>
 
                   <motion.a
-                    layoutId={`button-${active.title}-${id}`}
+                    layoutId={`button-${active.name}-${id}`}
                     href={active.ctaLink}
                     target="_blank"
                     className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
@@ -164,27 +165,27 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
       <ul className="max-w-2xl mx-auto w-full gap-4">
         {cards.map((card, index) => (
           <motion.div
-            layoutId={`card-${card.title}-${id}`}
-            key={`card-${card.title}-${id}`}
+            layoutId={`card-${card.name}-${id}`}
+            key={`card-${card.name}-${id}`}
             onClick={() => setActive(card)}
             className="p-4 flex flex-col md:flex-row justify-between items-center hover:bg-neutral-50 dark:hover:bg-neutral-800 rounded-xl cursor-pointer"
           >
             <div className="flex gap-4 flex-col md:flex-row ">
-              <motion.div layoutId={`image-${card.title}-${id}`}>
-                <Image
+              <motion.div layoutId={`image-${card.name}-${id}`}>
+                {props.product.imageURL && (<Image
                   width={100}
                   height={100}
                   src={card.src}
-                  alt={card.title}
+                  alt={card.name}
                   className="h-40 w-40 md:h-14 md:w-14 rounded-lg object-cover object-top"
-                />
+                />)}
               </motion.div>
               <div className="flex items-center">
                 <motion.h3
-                  layoutId={`title-${card.title}-${id}`}
+                  layoutId={`name-${card.name}-${id}`}
                   className="font-medium text-neutral-800 dark:text-neutral-200 text-center md:text-left"
                 >
-                  {card.title}
+                  {card.name}
                 </motion.h3>
                 {/* <motion.p
                   layoutId={`descrip  tion-${card.description}-${id}`}
@@ -195,7 +196,7 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
               </div>
             </div>
             <motion.button
-              layoutId={`button-${card.title}-${id}`}
+              layoutId={`button-${card.name}-${id}`}
               className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
             >
               {card.ctaText}
@@ -243,7 +244,7 @@ export const CloseIcon = () => {
 const cards = [ 
   {
     description: "Lana Del Rey",
-    title: "Crucial RAM 8GB DDR4 3200MHz CL22 (or ",
+    name: "Crucial RAM 8GB DDR4 3200MHz CL22 (or ",
     src: "https://assets.aceternity.com/demos/lana-del-rey.jpeg",
     ctaText: "Play",
     ctaLink: "https://ui.aceternity.com/templates",
@@ -266,7 +267,7 @@ const cards = [
   },
   {
     description: "Babbu Maan",
-    title: "Mitran Di Chhatri",
+    name: "Mitran Di Chhatri",
     src: "https://assets.aceternity.com/demos/babbu-maan.jpeg",
     ctaText: "Play",
     ctaLink: "https://ui.aceternity.com/templates",
@@ -289,7 +290,7 @@ const cards = [
 
   {
     description: "Metallica",
-    title: "For Whom The Bell Tolls",
+    name: "For Whom The Bell Tolls",
     src: "https://assets.aceternity.com/demos/metallica.jpeg",
     ctaText: "Play",
     ctaLink: "https://ui.aceternity.com/templates",
@@ -311,7 +312,7 @@ const cards = [
   },
   {
     description: "Led Zeppelin",
-    title: "Stairway To Heaven",
+    name: "Stairway To Heaven",
     src: "https://assets.aceternity.com/demos/led-zeppelin.jpeg",
     ctaText: "Play",
     ctaLink: "https://ui.aceternity.com/templates",
@@ -332,7 +333,7 @@ const cards = [
   },
   {
     description: "Mustafa Zahid",
-    title: "Toh Phir Aao",
+    name: "Toh Phir Aao",
     src: "https://assets.aceternity.com/demos/toh-phir-aao.jpeg",
     ctaText: "Play",
     ctaLink: "https://ui.aceternity.com/templates",

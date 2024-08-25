@@ -1,4 +1,4 @@
-import { Dashboard } from '@/components/navbarcom/testing'
+import { Dashboard } from "@/components/navbarcom/page";
 import Categories from '@/components/ProductPage/Categories'
 import Filters from '@/components/ProductPage/Filters'
 import ProductsDiv from '@/components/ProductPage/ProductsDiv'

@@ -2,7 +2,7 @@
 
 import { CarouselPlugin } from "@/components/Carosel";
 import {Categories} from "@/components/HomePage/Categories";
-import { Dashboard } from "@/components/navbarcom/testing";
+import { Dashboard } from "@/components/navbarcom/page";
 import { useGetCurrentUser } from "../../hooks/user";
 
 

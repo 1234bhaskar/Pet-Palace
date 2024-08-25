@@ -1,6 +1,6 @@
 "use client"
 import { CardComponent } from "@/components/card/page";
-import { Dashboard } from "@/components/navbarcom/testing";
+import { Dashboard } from "@/components/navbarcom/page";
 import { FC } from "react";
 import { useGetCurrentUser } from "../../../hooks/user";
 import CategoryCheckboxes from "@/components/radioButton/page";

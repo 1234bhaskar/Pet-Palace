@@ -32,7 +32,7 @@ model Category {
 }
 
 model Product {
-  id          Int        @id @default(autoincrement())
+  id          String        @id @default(cuid())
   name        String
   description String?
   price       Float
