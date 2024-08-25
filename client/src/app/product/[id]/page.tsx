@@ -5,11 +5,25 @@ import { CarouselDApiDemo } from "@/components/Carousel";
 import { Dashboard } from "@/components/navbarcom/testing";
 import { CiStar } from "react-icons/ci";  
 import { useGetCurrentUser } from "@/../../hooks/user";
+import { useGetProductById } from "../../../../hooks/Products";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
+import { addToCart } from "@/app/redux/cartSlices";
 
 
 export default function Order() {
-  const {user}=useGetCurrentUser();
 
+  const {user}=useGetCurrentUser();
+  const {id} = useParams();
+  const product=useGetProductById(id as string)
+ // console.log(product);
+  // useEffect(()=>{
+  //   console.log(addToCart);
+  // },[])
+
+  const dispatch=useAppDispatch();
 
   return (
     <>
@@ -22,16 +36,16 @@ export default function Order() {
 
 
           <div className="flex flex-col gap-4 md:w-[40%]">
-            <p>
-            Crucial RAM 8GB DDR4 3200MHz CL22 (or 2933MHz or 2666MHz) Laptop Memory CT8G4SFRA32A
+            <p className="text-5xl">
+              {product.product?.name}
             </p>
             <div className="flex items-center">
               <CiStar /><CiStar /><CiStar /><CiStar /><CiStar />  
             </div>  
             <div className="md:text-2xl">
-              Price
+              {`₹ `+product.product?.price}
             </div>
-            <div>
+            <div onClick={()=>dispatch(addToCart(product.product))}>
               <ButtonComponent title="Add to Cart" width={40}/>
             </div>
             <div>
@@ -42,7 +56,8 @@ export default function Order() {
                 Description
               </div>
               <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem nesciunt, minima aspernatur nemo temporibus nisi dignissimos ex assumenda quibusdam! Iure voluptatibus neque molestias laudantium! In sint reprehenderit nisi facere architecto ipsa totam dolorem magni sequi quas laudantium, cum cupiditate!
+                {product.product?.description}
+
               </p>
             </div>
             <div className="flex gap-10 mt-8">
