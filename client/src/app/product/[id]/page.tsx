@@ -2,15 +2,15 @@
 
 import { ButtonComponent } from "@/components/button";
 import { CarouselDApiDemo } from "@/components/Carousel";
-import { Dashboard } from "@/components/navbarcom/testing";
+import { Dashboard } from "@/components/navbarcom/page";
 import { CiStar } from "react-icons/ci";  
 import { useGetCurrentUser } from "@/../../hooks/user";
 import { useGetProductById } from "../../../../hooks/Products";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
-import { addToCart } from "@/app/redux/cartSlices";
+import { useAppDispatch, useAppSelector } from "@/app/Redux/hooks";
+import { AddProduct } from "../../Redux/Slices/Cart/Cart";
 
 
 export default function Order() {
@@ -45,7 +45,7 @@ export default function Order() {
             <div className="md:text-2xl">
               {`₹ `+product.product?.price}
             </div>
-            <div onClick={()=>dispatch(addToCart(product.product))}>
+            <div onClick={()=>dispatch(AddProduct(product.product))}>
               <ButtonComponent title="Add to Cart" width={40}/>
             </div>
             <div>

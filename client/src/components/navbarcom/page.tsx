@@ -65,13 +65,19 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dropdowntest } from "./dropdown";
 import { ModeToggle } from "./dark-light-mode";
 import { AccordionDemo } from "./Accordion";
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { useAppSelector } from "@/app/Redux/hooks";
 
 interface Dashboardprops{
   name:string
 }
 
 export const Dashboard:FC<Dashboardprops>=(props) =>{
+  const CartNumber=useAppSelector(Cart => Cart.Cart)
+  const CartQuantity = useMemo(() => {
+    return CartNumber.reduce((total, item) => total + item.quantity, 0);
+  }, [CartNumber]);
+
   return (
     <div className="flex  w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
@@ -166,6 +172,7 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
             </div>
           </form>
           <div className="ml-auto flex items-center gap-3">
+          <Link href={"/cart"}>cart {CartQuantity}</Link>
           <ModeToggle/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
