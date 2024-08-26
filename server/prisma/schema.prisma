@@ -51,6 +51,8 @@ model Product {
 model Order {
   id       String       @id @default(cuid())
   total    Float
+  quantity  Int
+  createdAt  DateTime  @default(now())
   products Product[]
   userId   String
   user     User      @relation(fields: [userId], references: [id])

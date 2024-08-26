@@ -12,6 +12,9 @@ export const types=`#graphql
         userId:String
         total:Int
         address:String
+        User:User
         Product:[Product]
+        quantity: Int
+        createdAt: String
     }
 `

@@ -23,7 +23,8 @@ const mutations={
                     products: {
                         connect: payload.ProductId.map(id => ({ id })),
                     },
-                    userId:ctx.user.id
+                    userId:ctx.user.id,
+                    quantity:payload.ProductId.length
                 }
             })
             console.log(Order);
@@ -48,6 +49,9 @@ const extraResolver={
                     },
                 },
             })
+        },
+        User:async(parent:Order)=>{
+            return await prisma.user.findUnique({ where:{id:parent.userId}})
         }
     }
 }
