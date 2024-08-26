@@ -6,8 +6,10 @@ import {
   Menu,
   Package2,
   Search,
-  PawPrint
+  PawPrint,
+  ShoppingCart
 } from "lucide-react";  
+
 
 
 
@@ -96,7 +98,7 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
             Pet Palace
           </Link> */}
           <Link
-            href="/products"
+            href="/Search"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Products
@@ -172,7 +174,9 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
             </div>
           </form>
           <div className="ml-auto flex items-center gap-3">
-          <Link href={"/cart"}>cart {CartQuantity}</Link>
+            {/* //Cart */}
+          {/* <Link href={"/cart"} className="border-2 border-white relative"><span><ShoppingCart width={50} height={50}/></span> <span className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ml-1 px-2 bg-orange-800 rounded-full ">{CartQuantity}</span></Link> */}
+          <Link href={"/cart"} className=" relative"><span><ShoppingCart width={50} height={50}/></span> <span className="absolute -top-1 px-2 -right-1  bg-orange-800 rounded-full">{CartQuantity}</span></Link>
           <ModeToggle/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
