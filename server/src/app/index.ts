@@ -8,6 +8,7 @@ import { GraphqlContext } from "../interface";
 import JWTService from "../services/jwt";
 import { Seller } from "./seller";
 import { Client } from "./Client";
+import { Order } from "./Order";
 
 export async function initServer(){
     const app=express();
@@ -18,15 +19,18 @@ export async function initServer(){
             ${User.types}
             ${Seller.types}
             ${Client.types}
+            ${Order.types}
 
         type Query{
             ${User.queries}
             ${Seller.queries}
             ${Client.queries}
+            ${Order.queries}
         }
 
         type Mutation{
             ${Seller.muataion}
+            ${Order.mutation}
         }
 
         `,
@@ -36,12 +40,15 @@ export async function initServer(){
             Query:{
                 ...User.resolvers.queries,
                 ...Seller.resolvers.queries,
-                ...Client.resolver.queries
+                ...Client.resolver.queries,
+                ...Order.resolvers.queries
             },
             Mutation:{
                 ...Seller.resolvers.mutations,
+                ...Order.resolvers.mutations
             },
-            ...Client.resolver.extraResolver
+            ...Client.resolver.extraResolver,
+            ...Order.resolvers.extraResolver
         },
     })
 

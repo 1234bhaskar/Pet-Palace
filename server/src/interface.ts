@@ -17,3 +17,9 @@ export interface CreateProductPayload{
     images:string[]
     sellerId:string
 }
+
+export interface CreateOrderItemPayload{
+    total:number
+    address:string 
+    ProductId:string[]
+}

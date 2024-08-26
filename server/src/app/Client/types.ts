@@ -8,5 +8,6 @@ export const types=`#graphql
     categories:[String]          
     images:[String]
     seller:User
+    Order:[Order]
 }
 `

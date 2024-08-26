@@ -1,4 +1,5 @@
 import { PrismaClient, Product } from '@prisma/client'
+import { Order } from '../Order';
 
 const prisma = new PrismaClient()
 
@@ -40,6 +41,17 @@ const extraResolver={
     Product:{
         seller:async(parent:Product)=> {
             return prisma.user.findUnique({where:{id:parent.sellerId}})
+        },
+        Order:async(parent:Product)=>{
+            return await prisma.order.findMany({
+                where:{
+                    products:{
+                        some:{
+                            id:parent.id
+                        }
+                    }
+                }
+            })
         }
     }
 }
