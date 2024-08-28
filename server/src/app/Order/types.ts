@@ -6,7 +6,7 @@ export const types=`#graphql
         address:String 
         ProductId:[ID]!
     }
-    
+    scalar Date
     type Order{
         id:String
         userId:String
@@ -15,6 +15,6 @@ export const types=`#graphql
         User:User
         Product:[Product]
         quantity: Int
-        createdAt: String
+        createdAt: Date
     }
 `

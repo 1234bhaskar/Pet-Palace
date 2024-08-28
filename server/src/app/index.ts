@@ -9,6 +9,7 @@ import JWTService from "../services/jwt";
 import { Seller } from "./seller";
 import { Client } from "./Client";
 import { Order } from "./Order";
+import { Admin } from "./Admin";
 
 export async function initServer(){
     const app=express();
@@ -20,12 +21,15 @@ export async function initServer(){
             ${Seller.types}
             ${Client.types}
             ${Order.types}
+            ${Admin.types}
 
         type Query{
             ${User.queries}
             ${Seller.queries}
             ${Client.queries}
             ${Order.queries}
+            ${Admin.queries}
+
         }
 
         type Mutation{
@@ -41,7 +45,8 @@ export async function initServer(){
                 ...User.resolvers.queries,
                 ...Seller.resolvers.queries,
                 ...Client.resolver.queries,
-                ...Order.resolvers.queries
+                ...Order.resolvers.queries,
+                ...Admin.resolvers.query,
             },
             Mutation:{
                 ...Seller.resolvers.mutations,
