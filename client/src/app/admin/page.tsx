@@ -6,10 +6,12 @@ import { useGetCurrentUser } from '../../../hooks/user';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import StatsCards from '@/components/AdminComp/card';
 import OrdersTable from '@/components/AdminComp/OrdersTable';
-import { useGetAllOrders } from '../../../hooks/admin';
+import { useGetAllOrders, useGetAllSellers } from '../../../hooks/admin';
 import { Order } from '../../../gql/graphql';
 import SelllerTable from '@/components/AdminComp/SelllerTable';
 import {format, parseISO} from 'date-fns';
+import { CardComponent } from '@/components/card/page';
+import { useGetAllProducts } from '../../../hooks/Products';
 
 
 
@@ -19,10 +21,16 @@ interface ChartDataInterface{
 }
 
 export default function Admin() {
-          const {user}=useGetCurrentUser();
-         const {orders} = useGetAllOrders();
-         const Order=orders;
-        const [Revenue,setTotalRevenue]=useState(0);
+    const {user}=useGetCurrentUser();
+    const {product}=useGetAllProducts()
+    const {orders} = useGetAllOrders();
+    const {sellers}=useGetAllSellers()
+    const Order=orders;
+
+    const [Revenue,setTotalRevenue]=useState(0);
+    const [NumberofSeller,setNumberofSeller]=useState(0)
+    const [NumberofOrder,setNumberofOrder]=useState(0)
+    const [NumberofProduct,setNumberofProduct]=useState(0)
     const [chartData, setchartData] = useState<ChartDataInterface[]>([
         { month: "Janunary", sale: 0 },
         { month: "Febuary", sale: 0 },
@@ -57,7 +65,7 @@ const fetchOrder = useCallback(() => {
 
                 }
             });
-               if (JSON.stringify(updatedChartData) !== JSON.stringify(chartData)) {
+            if (JSON.stringify(updatedChartData) !== JSON.stringify(chartData)) {
                 setchartData(updatedChartData);
             }
 
@@ -68,58 +76,59 @@ const fetchOrder = useCallback(() => {
                 return total;
             }, 0);
             setTotalRevenue(totalPrice);
-
+            setNumberofOrder(orders.length)
         }
     }, [Order]);
     
-    
+    useEffect(()=>{
+        setNumberofSeller(sellers?.length? sellers.length : 0)
+    },[sellers])    
+    useEffect(()=>{
+        setNumberofProduct(product?.length? product.length :0)
+    },[product])
+
     useEffect(() => {
         fetchOrder(); 
     }, [fetchOrder]);
   return (
-    <div className=' w-full justify-center'>
-      <Dashboard name={user?.firstName as string}/>
-          {/* Tabs */}
-      <div className="flex flex-col w-full items-center ">
-      <Tabs defaultValue="orders" className="w-full flex flex-col items-center h-full">
-  <TabsList className='sm:w-1/4  my-5'>
-    <TabsTrigger value="analitics">Analytics</TabsTrigger>
-    <TabsTrigger value="orders">Orders</TabsTrigger>
-  </TabsList>
-
-  {/* Analitics */}
-  <TabsContent value="analitics" className='w-full sm:flex  sm:px-10 gap-3'>
-
-    {/* Graph Component */}
-  <div className=' sm:w-[60%]'>
-  <ChartComponent chartData={chartData}/>
-  </div>
-  <div className=" sm:w-[40%] mt-10 sm:mt-0 h-screen">
-
-    {/** 4 Boxes for stats */}
-    <div className='text-4xl text-center mt-5 ml-5 '>Revenue</div>
-    <div className='grid grid-cols-2 place-items-center mt-5'>
-    <StatsCards/>   
-    </div>
-
-    {/* Seller Table */}
-    <div className='my-10 sm:mt-5'>
-    <div className='text-4xl text-center my-2'>Our Sellers</div>
-    <SelllerTable/>
-    </div>
-  </div>
-  </TabsContent>
-
-  {/* Orders table */}
-  <TabsContent value="orders" className='w-full flex justify-center '>
-     <OrdersTable/>
-  </TabsContent>
-</Tabs>
-
-    </div>
-
+    <div className="flex flex-col max-h-screen">
+            <div> <Dashboard name={user?.firstName as string} /></div>
+            <div className="">
+                <Tabs defaultValue="account" className="">
+                    <div className='flex justify-center'>
+                    <TabsList >
+                        <TabsTrigger value="account">Analytics</TabsTrigger>
+                        <TabsTrigger value="password">Orders</TabsTrigger>
+                    </TabsList>
+                    </div>
+                    <TabsContent value="account">
+                        <div className="flex flex-col md:grid md:grid-cols-12">
+                            <div className="col-span-7 ">
+                                <ChartComponent chartData={chartData}/>
+                            </div>
+                            <div className="md:col-span-5">
+                                <div className="grid gap-4 grid-cols-2 mx-5">
+                                    <CardComponent title="Total Revenue" money={Revenue} />
+                                    <CardComponent title="Number of Sellers" content={NumberofSeller} />
+                                    <CardComponent title="Total Orders" content={NumberofOrder} />
+                                    <CardComponent title="Total Products" content={NumberofProduct} />
+                                </div>
+                                <div className='my-10 sm:mt-5'>
+                                    <div className='text-4xl text-center my-2'>Our Sellers</div>
+                                        <SelllerTable/>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="password">  <div className='flex justify-center mt-10'>
+                                                        <OrdersTable/>
+                                                    </div>
+                    </TabsContent>
+                </Tabs>
+            </div>
+            
            
-
         </div>
     
   )

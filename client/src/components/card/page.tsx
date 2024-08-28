@@ -10,7 +10,8 @@ import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
 
 interface CardComponentprops{
     title:string
-    content:string
+    content?:number
+    money?:number
     // sign?:"DollarSign" | "Users" | "CreditCard" | "Activity"
 }
 
@@ -23,7 +24,8 @@ export const CardComponent: FC<CardComponentprops> = (props) => {
             
             </CardHeader>
             <CardContent>
-            <div className="text-2xl font-bold">{props.content}</div>
+            {props.content && (<div className="text-2xl font-bold">{props.content}</div>)}
+            {props.money && (<div className="text-2xl font-bold">₹{props.money}</div>)}
             </CardContent>
         </Card>
     </div>

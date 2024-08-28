@@ -16,7 +16,7 @@ import Image from 'next/image';
 export default function SelllerTable() {
     const Seller=useGetAllSellers();
   return (
-    <div className='border rounded-md border-gray-500 mx-2 h-full'>
+    <div className='border rounded-md dark:border-slate-700 mx-2 h-full border-slate-200'>
   <Table>
   <TableHeader>
     <TableRow>

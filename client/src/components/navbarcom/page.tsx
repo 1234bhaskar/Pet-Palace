@@ -82,7 +82,7 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
 
   return (
     <div className="flex  w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
+      <header className="sticky top-0 flex h-14 items-center gap-4 border-b bg-background px-4 md:px-6 sm:z-10">
         <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-4">
           <Link
             href="/"
@@ -176,7 +176,7 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
           <div className="ml-auto flex items-center gap-3">
             {/* //Cart */}
           {/* <Link href={"/cart"} className="border-2 border-white relative"><span><ShoppingCart width={50} height={50}/></span> <span className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 ml-1 px-2 bg-orange-800 rounded-full ">{CartQuantity}</span></Link> */}
-          <Link href={"/cart"} className=" relative"><span><ShoppingCart width={50} height={50}/></span> <span className="absolute -top-1 px-2 -right-1  bg-orange-800 rounded-full">{CartQuantity}</span></Link>
+          <Link href={"/cart"} className=" relative"><span><ShoppingCart width={30} height={30}/></span> <span className="absolute -top-1 px-2 -right-1 text-sm bg-orange-800 rounded-full">{CartQuantity}</span></Link>
           <ModeToggle/>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

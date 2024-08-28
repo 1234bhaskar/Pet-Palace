@@ -67,7 +67,7 @@ export const ChartComponent:FC<ChartComponentProps>=({chartData})=> {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="sale" fill="var(--color-desktop)" radius={8}>
+            <Bar dataKey="sale" fill="var(--color-desktop)" radius={16}>
               <LabelList
                 position="top"
                 offset={12}
@@ -78,14 +78,6 @@ export const ChartComponent:FC<ChartComponentProps>=({chartData})=> {
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing sales visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
 
     {/* stats */}
