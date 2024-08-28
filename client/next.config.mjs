@@ -14,8 +14,16 @@ const nextConfig = {
         // port: "*",
         // pathname: "/cdn/shop",
       },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
-    domains: ["assets.aceternity.com","m.media-amazon.com","krishna-twitter-dev.s3.ap-south-1.amazonaws.com"]
+    domains: [
+      "assets.aceternity.com",
+      "m.media-amazon.com",
+      "krishna-twitter-dev.s3.ap-south-1.amazonaws.com",
+    ],
   },
 };
 
