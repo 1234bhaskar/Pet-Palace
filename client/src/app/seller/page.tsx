@@ -13,8 +13,8 @@ interface Category {
 const categories: Category[] = [
     { id: 1, name: "Dog" },
     { id: 2, name: "Cat" },
-    { id: 3, name: "Cloths" },
-    { id: 4, name: "Toy" },
+    { id: 3, name: "Toy" },
+    { id: 4, name: "Cloths" },
 ];
 
 export default function ProductPage() {
@@ -25,10 +25,10 @@ export default function ProductPage() {
         <div className="flex flex-col gap-7">
             <Dashboard name={user?.firstName as string} />
             <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4 mx-5">
-                <CardComponent title="Total Revenue" content="$45,231.89" />
-                <CardComponent title="Oder Pending" content="100" />
-                <CardComponent title="Cancelled Orders" content="2" />
-                <CardComponent title="Total Revenue" content="$45,231.89" />
+                <CardComponent title="Total Revenue" content={100} />
+                <CardComponent title="Oder Pending" content={100} />
+                <CardComponent title="Cancelled Orders" content={100} />
+                <CardComponent title="Total Revenue" content={100} />
             </div>
             <div>
                 <CategoryCheckboxes

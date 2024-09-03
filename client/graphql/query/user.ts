@@ -18,3 +18,11 @@ export const getCurrentUserQuery=graphql(`
         }
     }      
 `)
+export const getAllCategories=graphql(`
+    #graphql
+    query GetAllCategories {
+        getAllCategories {
+            name
+        }
+    }
+`)

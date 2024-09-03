@@ -9,5 +9,9 @@ export const types=`#graphql
     images:[String]
     seller:User
     Order:[Order]
-}
+    },
+    type  Category{
+        id:ID!,
+        name: String
+    }
 `

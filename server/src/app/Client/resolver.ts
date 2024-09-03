@@ -35,6 +35,15 @@ const queries={
         else{
             return null
         }
+    },
+    getAllCategories:async()=>{
+        try{
+            const categories=await prisma.category.findMany({});
+            return categories
+        }
+        catch(e){
+            return e
+        }
     }
 }
 const extraResolver={
