@@ -20,7 +20,7 @@ interface Productprops {
 
 export default function Order() {
     const [products, setProducts] = useState<Productprops[]>([]);
-    const CartNumber=useAppSelector(Cart => Cart.Cart)
+    const CartNumber=useAppSelector(Cart => Cart.Cart.Cart)
     const [TotalPrice, setTotalPrice]=useState<number>(0)
 
     

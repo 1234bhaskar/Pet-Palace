@@ -75,9 +75,11 @@ interface Dashboardprops{
 }
 
 export const Dashboard:FC<Dashboardprops>=(props) =>{
-  const CartNumber=useAppSelector(Cart => Cart.Cart)
+  const CartNumber=useAppSelector(Cart => Cart.Cart.Cart)
   const CartQuantity = useMemo(() => {
-    return CartNumber.reduce((total, item) => total + item.quantity, 0);
+    if(CartNumber){
+      return CartNumber.reduce((total, item) => total + item.quantity, 0);
+    }
   }, [CartNumber]);
 
   return (

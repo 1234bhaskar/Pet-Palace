@@ -1,6 +1,7 @@
 "use client"
 import { configureStore } from '@reduxjs/toolkit'
 import CartSlice  from './Slices/Cart/Cart'
+import  CategoriesSlice  from './Slices/Categories/Categories'
 import {persistReducer} from "redux-persist"
 import {combineReducers} from "@reduxjs/toolkit"
 import storage from 'redux-persist/lib/storage'
@@ -31,13 +32,16 @@ const persistConfug={
 }
 
 const reducer=combineReducers({
-    Cart:CartSlice
+    Cart:CartSlice,
 })
 
 const persistedReducer=persistReducer(persistConfug,reducer)
 
 export const store = configureStore({
-    reducer:persistedReducer,
+    reducer:{
+      Cart:persistedReducer,
+      Categories:CategoriesSlice
+    },
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
         serializableCheck:false
     })
