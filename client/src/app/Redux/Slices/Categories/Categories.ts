@@ -14,9 +14,14 @@ export const CategoriesSlice=createSlice({
     reducers:{
         AddCategories:(state,action:PayloadAction<string>)=>{
             // state=({name: action.payload})  //!ye nhi chlra
-            state.name=action.payload
+            if(action.payload=="ALL"){
+                state.name=""
+            }
+            else{
+                state.name=action.payload
+            }
         },
-        RemoveCategories:(state,action)=>{
+        RemoveCategories:(state)=>{
             state.name=""
         }
     }

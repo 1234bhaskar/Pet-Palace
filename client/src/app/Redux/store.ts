@@ -6,6 +6,7 @@ import {persistReducer} from "redux-persist"
 import {combineReducers} from "@reduxjs/toolkit"
 import storage from 'redux-persist/lib/storage'
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import  SearchSlice  from './Slices/Serach/Search'
 
 const createNoopStorage = () => {
     return {
@@ -40,7 +41,8 @@ const persistedReducer=persistReducer(persistConfug,reducer)
 export const store = configureStore({
     reducer:{
       Cart:persistedReducer,
-      Categories:CategoriesSlice
+      Categories:CategoriesSlice,
+      Search:SearchSlice
     },
     middleware:(getDefaultMiddleware)=>getDefaultMiddleware({
         serializableCheck:false

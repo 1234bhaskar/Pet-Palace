@@ -1,6 +1,6 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/app/Redux/hooks';
-import { AddCategories } from '@/app/Redux/Slices/Categories/Categories';
+import { AddCategories, RemoveCategories } from '@/app/Redux/Slices/Categories/Categories';
 import React from 'react'
 
 export default function Categories() {
@@ -10,8 +10,8 @@ export default function Categories() {
   const dispatch=useAppDispatch();
     const categories=[
         {id:1,name:"ALL"},
-        {id:2,name:"DOG"},
-        {id:3,name:"CAT"},
+        {id:2,name:"dog"},
+        {id:3,name:"cat"},
         {id:4,name:"RAINWEAR"}  
     ]
   return (
@@ -26,6 +26,7 @@ export default function Categories() {
                 )}
                 </div>
         </div>
+        <button onClick={()=>dispatch(RemoveCategories())}> Remove </button>
     </div>
   )
 }
