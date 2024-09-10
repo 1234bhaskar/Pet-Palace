@@ -5,16 +5,26 @@ const prisma = new PrismaClient()
 
 
 const queries={
-    getAllProduct:async(parent:any,args:any)=>{
+    getAllProduct:async()=>{
         const product=await prisma.product.findMany({
             include:{
                 categories:true
             }
         });
-        return product
+       // console.log();
+        
+        const productsWithCategory = product.map((product)=>{
+            return{
+                ...product,
+                categories:product.categories.map((categories)=>categories.name)
+            }
+        })
+            return productsWithCategory;
+        
+
+        
     },
     getProuctById:async(parent:any,{id}:{id:string})=>{
-        console.log(id)
         const product= await prisma.product.findUnique({
             where:{
                 id:id
@@ -44,6 +54,49 @@ const queries={
         catch(e){
             return e
         }
+    },
+    getProductsBySearch:async(parent:any,{searchTerm}:{searchTerm:string})=>{
+        if(searchTerm==null){
+            searchTerm="";
+        }
+               
+            const products=await prisma.product.findMany({
+                where:{
+                    OR:[
+                        {
+                        name:{
+                        contains:searchTerm, // case-insensitive search
+                        mode:'insensitive',
+                    },
+                },{
+                    description:{
+                        contains:searchTerm, //if the term is present in description
+                        mode:'insensitive',
+                    }}
+                    ]
+                },
+                include:{
+                    categories:true
+                }
+            });
+
+            console.log(products)
+
+            if(products){
+                const productsWithCategory=products.map((product)=>{
+                    return{
+                        ...product,
+                        categories:product.categories.map((cat)=>cat.name),
+                    }
+                })
+                return productsWithCategory;
+            }else{
+                return null;
+            }
+            
+           
+            
+        
     }
 }
 const extraResolver={
