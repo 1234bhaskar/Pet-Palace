@@ -67,8 +67,9 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Dropdowntest } from "./dropdown";
 import { ModeToggle } from "./dark-light-mode";
 import { AccordionDemo } from "./Accordion";
-import { FC, useMemo } from "react";
-import { useAppSelector } from "@/app/Redux/hooks";
+import { FC, useMemo, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/app/Redux/hooks";
+import { useRouter } from "next/navigation";
 
 interface Dashboardprops{
   name:string
@@ -81,6 +82,20 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
       return CartNumber.reduce((total, item) => total + item.quantity, 0);
     }
   }, [CartNumber]);
+
+  //search Functionality
+
+  const dispatch=useAppDispatch();
+  const [searchQuery,setSearchQuery]=useState('');
+  const router=useRouter();
+  function OnSearch(event:React.FormEvent){
+    event.preventDefault();
+    const encodedSearchQuery=encodeURI(searchQuery);
+    router.push(`/Search?q=${encodedSearchQuery}`)
+    console.log("search",encodedSearchQuery);
+    
+  }
+
 
   return (
     <div className="flex  w-full flex-col">
@@ -165,10 +180,10 @@ export const Dashboard:FC<Dashboardprops>=(props) =>{
           </SheetContent>
         </Sheet>
         <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 ">
-          <form className="ml-10 flex-1 sm:flex-initial">
+          <form className="ml-10 flex-1 sm:flex-initial" onSubmit={OnSearch}>
             <div className="relative">
               <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
-              <Input
+              <Input onChange={(e)=>setSearchQuery(e.target.value)}
                 type="search"
                 placeholder="Search products..."
                 className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[900px] rounded-full border focus:border-none border-slate-400 "

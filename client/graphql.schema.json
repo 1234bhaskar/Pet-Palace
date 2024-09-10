@@ -700,6 +700,35 @@
             "deprecationReason": null
           },
           {
+            "name": "getProductsBySearch",
+            "description": null,
+            "args": [
+              {
+                "name": "searchTerm",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "Product",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getProuctById",
             "description": null,
             "args": [

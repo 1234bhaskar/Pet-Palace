@@ -13,6 +13,7 @@ export const getAllProductQuery = graphql(`
       firstName
       lastName
     }
+    categories
   }
 }  
     `)
@@ -33,3 +34,17 @@ export const getProductByIdQuery= graphql(`
 }
   `)
     
+
+    export const getProductsBySearchQuery=graphql(`
+      #graphql
+    query GetProductsBySearch($searchTerm: String) {
+    getProductsBySearch(searchTerm: $searchTerm) {
+    name
+    description
+    categories
+    id
+    price
+    images
+  }
+}
+      `)

@@ -16,8 +16,9 @@ const documents = {
     "\n    #graphql\n    mutation CreateProduct($payload: CreatingProductData!) {\n        createProduct(payload: $payload)\n    }\n": types.CreateProductDocument,
     "#graphql\nquery GetAllOrder {\n getAllOrder {\n            User {\n                firstName\n                lastName\n                email\n            }\n            Product {\n                name\n            }\n            total\n            quantity\n            createdAt\n            id\n}\n}\n    ": types.GetAllOrderDocument,
     "#graphql\n    query GetAllSellers {\n    getAllSellers {\n        firstName\n        lastName\n        profileImageURL\n        createdAt\n    }\n    }\n": types.GetAllSellersDocument,
-    "\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n  }\n}  \n    ": types.GetAllProductDocument,
+    "\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n    categories\n  }\n}  \n    ": types.GetAllProductDocument,
     "\n  #graphql\n  query GetProuctById($getProuctByIdId: String!) {\n  getProuctById(id: $getProuctByIdId) {\n    id\n    images\n    name\n    price\n    stock\n    description\n    categories\n  }\n}\n  ": types.GetProuctByIdDocument,
+    "\n      #graphql\n    query GetProductsBySearch($searchTerm: String) {\n    getProductsBySearch(searchTerm: $searchTerm) {\n    name\n    description\n    categories\n    id\n    price\n    images\n  }\n}\n      ": types.GetProductsBySearchDocument,
     "\n    #graphql\n    query GetSignedURLForProduct($imageName: String!, $imageType: String!) {\n        getSignedURLForProduct(imageName: $imageName, imageType: $imageType)\n    }     \n": types.GetSignedUrlForProductDocument,
     "\n    #graphql\n    query VerifyGoogleToken($token: String!,$role: String) {\n        verifyGoogleToken(token: $token,role: $role)\n    }\n": types.VerifyGoogleTokenDocument,
     "\n    #graphql\n    query GetCurrentUser {\n        getCurrentUser {\n            id\n            lastName\n            firstName\n            profileImageURL\n        }\n    }      \n": types.GetCurrentUserDocument,
@@ -53,11 +54,15 @@ export function graphql(source: "#graphql\n    query GetAllSellers {\n    getAll
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n  }\n}  \n    "): (typeof documents)["\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n  }\n}  \n    "];
+export function graphql(source: "\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n    categories\n  }\n}  \n    "): (typeof documents)["\n    #graphql\n     query GetAllProduct {\n     getAllProduct {\n    id\n    name\n    price\n    description\n    images\n    seller {\n      firstName\n      lastName\n    }\n    categories\n  }\n}  \n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  #graphql\n  query GetProuctById($getProuctByIdId: String!) {\n  getProuctById(id: $getProuctByIdId) {\n    id\n    images\n    name\n    price\n    stock\n    description\n    categories\n  }\n}\n  "): (typeof documents)["\n  #graphql\n  query GetProuctById($getProuctByIdId: String!) {\n  getProuctById(id: $getProuctByIdId) {\n    id\n    images\n    name\n    price\n    stock\n    description\n    categories\n  }\n}\n  "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      #graphql\n    query GetProductsBySearch($searchTerm: String) {\n    getProductsBySearch(searchTerm: $searchTerm) {\n    name\n    description\n    categories\n    id\n    price\n    images\n  }\n}\n      "): (typeof documents)["\n      #graphql\n    query GetProductsBySearch($searchTerm: String) {\n    getProductsBySearch(searchTerm: $searchTerm) {\n    name\n    description\n    categories\n    id\n    price\n    images\n  }\n}\n      "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
