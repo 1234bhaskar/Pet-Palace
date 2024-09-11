@@ -1,30 +1,61 @@
 import { PrismaClient, Product } from '@prisma/client'
 import { Order } from '../Order';
+import * as dotenv from 'dotenv';
+import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
+import { TaskType } from "@google/generative-ai";
+
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { NeonPostgres } from "@langchain/community/vectorstores/neon";
+
+dotenv.config()
+
+// Initialize an embeddings instance
+const embeddings = new GoogleGenerativeAIEmbeddings({
+    apiKey:process.env.GOOGLE_API_KEY,
+    model: "text-embedding-004", // 768 dimensions
+    taskType: TaskType.RETRIEVAL_DOCUMENT,
+    title: "Document title",
+  });
+  type Producttype = {
+    id: string;
+    name: string;
+    description: string | null;
+    price: number;
+    stock: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    images: string[];
+    sellerId: string;
+    categories: string[];
+}
 
 const prisma = new PrismaClient()
 
 
 const queries={
-    getAllProduct:async()=>{
+    getAllProduct:async(parent:any,args:any)=>{
         const product=await prisma.product.findMany({
             include:{
                 categories:true
             }
         });
-       // console.log();
-        
-        const productsWithCategory = product.map((product)=>{
-            return{
-                ...product,
-                categories:product.categories.map((categories)=>categories.name)
-            }
-        })
-            return productsWithCategory;
-        
-
-        
+        if (product) {
+            
+            const modifiedProducts = product.map((products) => {
+                return {
+                  ...products,
+                  categories: products.categories.map((category) => category.name), 
+                };
+              });
+          
+              return modifiedProducts;
+        }
+        else{
+            return null
+        }
     },
     getProuctById:async(parent:any,{id}:{id:string})=>{
+        console.log(id)
         const product= await prisma.product.findUnique({
             where:{
                 id:id
@@ -33,13 +64,15 @@ const queries={
                 categories:true
             }
         })
+        console.log(product);
+        
         if (product) {
-            // Map categories to just their names
+            
             const categories = product.categories.map(category => category.name);
     
             return {
                 ...product,
-                categories // Replace categories with just the names
+                categories 
             };
         } 
         else{
@@ -57,51 +90,91 @@ const queries={
     },
     getProductsBySearch:async(parent:any,{searchTerm}:{searchTerm:string})=>{
         if(searchTerm==null){
-            searchTerm="";
+            searchTerm=""
         }
-               
-            const products=await prisma.product.findMany({
-                where:{
-                    OR:[
-                        {
-                        name:{
-                        contains:searchTerm, // case-insensitive search
-                        mode:'insensitive',
+        const products=await prisma.product.findMany({
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: searchTerm, 
+                            mode: 'insensitive' 
+                        }
                     },
-                },{
-                    description:{
-                        contains:searchTerm, //if the term is present in description
-                        mode:'insensitive',
-                    }}
-                    ]
-                },
-                include:{
-                    categories:true
-                }
-            });
-
-            console.log(products)
-
-            if(products){
-                const productsWithCategory=products.map((product)=>{
-                    return{
-                        ...product,
-                        categories:product.categories.map((cat)=>cat.name),
+                    {
+                        description: {
+                            contains: searchTerm,
+                            mode: 'insensitive'
+                        }
+                    }
+                ]
+            },
+            include: {
+                categories: true,
+            }
+        });
+            
+            const modifiedProducts = products.map((product) => {
+                return {
+                  ...product,
+                  categories: product.categories.map((category) => category.name), 
+                };
+              });
+          
+              console.log(modifiedProducts);
+        
+        if(searchTerm.length>=3){
+            const vectorStore = await NeonPostgres.initialize(embeddings, {
+                connectionString: process.env.DATABASE_URL as string,
+              });
+    
+            try{
+                const resultOne = await vectorStore.similaritySearch(searchTerm,4);
+                const vectorProducts:Producttype[]=resultOne.filter((doc)=>{
+                    if(modifiedProducts.some((product)=>product.id===doc.metadata.id)){
+                        return false
+                    }
+                    else{   
+                        return true
+                    }
+                }).map((doc) =>({
+                    id: doc.metadata.id as string, // Ensure id is a string
+                    name: doc.pageContent as string,
+                    description: doc.metadata.description as string|null,
+                    price: parseFloat(doc.metadata.price) || 0,  // Convert price to a number
+                    stock: doc.metadata.stock as boolean,
+                    categories:doc.metadata.categories as string[],
+                    createdAt: new Date(doc.metadata.createdAt) as Date, // Convert to Date object
+                    updatedAt: new Date(doc.metadata.updatedAt) as Date, // Convert to Date object
+                    images: doc.metadata.images as string[],  // Ensure images is an array of strings
+                    sellerId: doc.metadata.sellerId as string, // Ensure sellerId is a string
+                }))
+                console.log(vectorProducts);
+                modifiedProducts.push(...vectorProducts)
+                return modifiedProducts
+                const finalresult=products.filter((product)=>{
+                    if(resultOne.some((doc)=>doc.metadata.id===product.id)){
+                        return true
+                    }
+                    else{
+                        return false
                     }
                 })
-                return productsWithCategory;
-            }else{
-                return null;
+                
             }
-            
-           
-            
-        
+            catch(e){
+                console.log(e);
+                
+            }
+        }
+        return modifiedProducts;
+
     }
 }
 const extraResolver={
     Product:{
         seller:async(parent:Product)=> {
+            
             return prisma.user.findUnique({where:{id:parent.sellerId}})
         },
         Order:async(parent:Product)=>{
@@ -114,7 +187,10 @@ const extraResolver={
                     }
                 }
             })
-        }
+        },
+        // categories:async(parent:Product)=>{
+        //     return prisma.category.findUnique({where:{id:parent.id}})
+        // }
     }
 }
 
