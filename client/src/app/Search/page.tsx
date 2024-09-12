@@ -18,11 +18,11 @@ const {user}=useGetCurrentUser();
   // console.log("Search Params",encodedSearchQuery);
   
   return (
-        <div className='w-full sm:px-32 relative'>
-        <div className="h-10 absolute left-0"><Dashboard name={user?.firstName as string}/></div>
+        <div className='w-full'>
+        <div className="h-10 "><Dashboard name={user?.firstName as string}/></div>
         <Categories/>
         <Filters/>
-        <ProductsDiv Searchparams={searchQuery}/>
+        <ProductsDiv  Searchparams={searchQuery}/>
         </div>
   )
 }

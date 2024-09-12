@@ -15,7 +15,7 @@ export const ProductsDiv:FC<ProductsDivInterface>=({Searchparams})=> {
       const Selectedcategoies=useAppSelector(categories => categories.Categories.name)
       console.log(Selectedcategoies);
   return (
-    <div className='w-full border-2 grid sm:grid-cols-3 grid-cols-1 mt-3 sm:m-0' >
+    <div className='w-full grid sm:grid-cols-3 grid-cols-1 mt-3 gap-5 sm:m-0 sm:px-10' >
       {
 
         Searchparams? SearchProduct.product?.map((p)=>(

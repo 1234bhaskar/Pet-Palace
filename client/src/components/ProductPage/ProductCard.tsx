@@ -18,19 +18,16 @@ export const ProductCard:FC<ProductCardProp>=(props)=> {
 
   const {product}=props;
   return (
-      <Link href={"/product/"+product.id}  className=' place-self-center my-5'>
-   <Card>
-  <CardHeader>
-    <CardDescription>
-        <Image className='' src={product.images?.[0] as string} alt='product' width={200} height={10}/>
+      <Link href={"/product/"+product.id}  className=''>
+   <Card className='sm:h-[400px] flex flex-col '>
+    <CardDescription className='h-4/5 flex sm:p-2 justify-center '>
+        <Image className='' src={product.images?.[0] as string} alt='product' width={300} height={100} quality={75} />
     </CardDescription>
-  </CardHeader>
-  <CardContent>
-    <p>{product.name}</p>
-  </CardContent>
-  <CardFooter>
+  
+    <CardContent className='h-1/5' >
+    <p>{(product.name.length>100)?product.name.substring(0,100)+"...":product.name}</p>
     <p>${product.price}</p>
-  </CardFooter>
+  </CardContent>
 </Card>
 
 </Link>
