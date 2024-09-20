@@ -31,8 +31,6 @@ export default function Filters() {
            <div className='flex justify-between  mx-5 sm:mx-0 sm:justify-end'>
             <span className='flex sm:justify-end   border-2  p-2 border-black '>
              <span className=' flex items-center rounded-md'>
-             <Search/>
-             <input  type="text" className='outline-none' placeholder="Search for you's"/>
              </span>
              </span>
      

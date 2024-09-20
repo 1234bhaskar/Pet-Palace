@@ -2,6 +2,7 @@
 import { useAppDispatch, useAppSelector } from '@/app/Redux/hooks';
 import { AddCategories, RemoveCategories } from '@/app/Redux/Slices/Categories/Categories';
 import React from 'react'
+import { ButtonComponent } from '../button';
 
 export default function Categories() {
   const CartNumber=useAppSelector(categories => categories.Categories.name)
@@ -12,7 +13,8 @@ export default function Categories() {
         {id:1,name:"ALL"},
         {id:2,name:"dog"},
         {id:3,name:"cat"},
-        {id:4,name:"RAINWEAR"}  
+        {id:4,name:"toy"},
+        {id:5,name:"cloth"}
     ]
   return (
     <div>
@@ -20,13 +22,12 @@ export default function Categories() {
         {/* //categoies */}
         <div className='w-full '>
           <div>{CartNumber.length}</div>
-            <div className='sm:w-1/4 mx-2 sm:m-0 grid grid-cols-3 gap-2 my-8 '>
+            <div className='sm:w-1/4 mx-2 sm:m-0 flex gap-10 my-8 '>
                 {categories.map((e)=>
-                  (<span className='border border-black flex justify-center sm:hover:bg-black sm:hover:text-white sm:hover:font-bold' onClick={()=>dispatch(AddCategories(e.name))}>{e.name}</span>)
+                  (<div onClick={()=>dispatch(AddCategories(e.name))} className='flex'><ButtonComponent width={100}  title={e.name}></ButtonComponent></div>)
                 )}
-                </div>
+              </div>
         </div>
-        <button onClick={()=>dispatch(RemoveCategories())}> Remove </button>
     </div>
   )
 }

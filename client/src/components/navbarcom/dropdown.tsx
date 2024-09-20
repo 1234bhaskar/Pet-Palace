@@ -22,9 +22,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Category } from "../../../gql/graphql";
 import { useCallback } from "react";
+import { AddCategories } from "@/app/Redux/Slices/Categories/Categories";
+import { useAppDispatch } from "@/app/Redux/hooks";
   
   export function Dropdowntest() {
     const {categories}=useGetAllCategory();
+    const dispatch=useAppDispatch();
+
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
@@ -40,7 +44,7 @@ import { useCallback } from "react";
         <DropdownMenuContent className="w-56">  
           <DropdownMenuLabel>Categories</DropdownMenuLabel>
             <div className="flex flex-col ml-5">
-            {categories?.map(categorie => <Link href={`/Search?categories=${categorie?.name}`}><DropDownContentcomponent category={categorie?.name as string}/></Link>)}
+            {categories?.map(categorie => <Link href={`/Search?categories=${categorie?.name}`} onClick={()=>dispatch(AddCategories(categorie?.name as string))} ><DropDownContentcomponent category={categorie?.name as string}/></Link>)}
             </div>
         </DropdownMenuContent>
       </DropdownMenu>
