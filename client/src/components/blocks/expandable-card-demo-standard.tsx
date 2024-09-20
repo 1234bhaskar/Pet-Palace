@@ -18,19 +18,19 @@ interface Productprops {
   name: string;
   description?: string;
   price: number;
-  imageURL?:string;
+  images?:string;
   quantity:number
 }
 
 interface Products{
-  product:Productprops
+  product:Productprops,
 }
 
 export const ExpandableCardDemo:FC<Products>=(props) =>{
   const cards = [ 
     {
       name: truncateSentence(props.product.name),
-      src: `${props.product.imageURL}`,
+      src: `${props.product.images}`,
       ctaText: `$ ${props.product.price }`,
       ctaLink: "https://ui.aceternity.com/templates",
       content: () => {
@@ -108,7 +108,7 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
               className="w-full max-w-[500px]  h-full md:h-fit md:max-h-[90%]  flex flex-col bg-white dark:bg-neutral-900 sm:rounded-3xl overflow-hidden"
             >
               <motion.div layoutId={`image-${active.name}-${id}`}>
-                {props.product.imageURL && (<Image
+                {props.product.images && (<Image
                   priority
                   width={200}
                   height={200}
@@ -172,7 +172,7 @@ export const ExpandableCardDemo:FC<Products>=(props) =>{
           >
             <div className="flex gap-4 flex-col md:flex-row ">
               <motion.div layoutId={`image-${card.name}-${id}`}>
-                {props.product.imageURL && (<Image
+                {props.product.images && (<Image
                   width={100}
                   height={100}
                   src={card.src}

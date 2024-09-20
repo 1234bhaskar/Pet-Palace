@@ -6,9 +6,9 @@ interface CartState{
     name: string;
     description?: string;
     price: number;
-    imageURL?:string,
+    images?:string,
     stock?:Boolean,
-    quantity:number
+    quantity:number 
 }
 
 const initialState:CartState[]=[]
@@ -25,7 +25,7 @@ export const CartSlice=createSlice({
             else{
                 const CartTemp:CartState={
                     id:action.payload.id,
-                    imageURL:action.payload.imageUrl,
+                    images:action.payload.images[0],
                     name:action.payload.name,
                     stock:action.payload.stock,
                     price:action.payload.price,

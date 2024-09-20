@@ -46,10 +46,10 @@ export default function Order() {
               {`₹ `+product.product?.price}
             </div>
             <div onClick={()=>dispatch(AddProduct(product.product))}>
-              <ButtonComponent title="Add to Cart" width={40}/>
+              <ButtonComponent variant="secondary" title="Add to Cart" width={40}/>
             </div>
             <div>
-              <ButtonComponent title="Buy" width={40}/>
+              <ButtonComponent variant="secondary" title="Buy" width={40}/>
             </div>
             <div className="flex flex-col mt-10 gap-5">
               <div className="text-3xl font-bold ">
