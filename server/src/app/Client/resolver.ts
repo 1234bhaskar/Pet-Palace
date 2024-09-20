@@ -89,22 +89,33 @@ const queries={
         }
     },
     getProductsBySearch:async(parent:any,{searchTerm}:{searchTerm:string})=>{
+        // let products:Product[]
         if(searchTerm==null){
-            searchTerm=""
+            let products=await prisma.product.findMany({
+                include:{
+                    categories:true
+                }
+            })
+            const modifiedProducts = products.map((product) => {
+                return {
+                  ...product,
+                  categories: product.categories.map((category) => category.name), 
+                };
+              });
+            return modifiedProducts
         }
+        //! Partial Matching not included in full-text search
         const products=await prisma.product.findMany({
             where: {
                 OR: [
                     {
                         name: {
-                            contains: searchTerm, 
-                            mode: 'insensitive' 
+                            search: searchTerm, 
                         }
                     },
                     {
                         description: {
-                            contains: searchTerm,
-                            mode: 'insensitive'
+                            search: searchTerm,
                         }
                     }
                 ]
