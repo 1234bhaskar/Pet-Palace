@@ -25,7 +25,7 @@
     "@neondatabase/serverless": "^0.9.5",
     "@prisma/client": "^5.18.0",
     "@types/jsonwebtoken": "^9.0.6",
-    "axios": "^1.7.4",
+    "axios": "^1.7.7",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

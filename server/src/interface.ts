@@ -21,5 +21,10 @@ export interface CreateProductPayload{
 export interface CreateOrderItemPayload{
     total:number
     address:string 
-    ProductId:string[]
+    Products:{
+        name:string,
+        id:string,
+        price:string,
+        quantity:number
+    }[]
 }

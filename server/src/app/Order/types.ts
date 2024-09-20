@@ -1,10 +1,16 @@
 export const types=`#graphql
     #graphql
+    input ProductInput {
+        name: String!
+        id: String!
+        price: Int!
+        quantity: Int!
+    }
 
     input CreatingOrderData{
         total:Int!
         address:String 
-        ProductId:[ID]!
+        Products:[ProductInput!]!
     }
     scalar Date
     type Order{
