@@ -1,7 +1,6 @@
 "use client"
 
 import { ButtonComponent } from "@/components/button";
-import { CarouselDApiDemo } from "@/components/Carousel";
 import { Dashboard } from "@/components/navbarcom/page";
 import { CiStar } from "react-icons/ci";  
 import { useGetCurrentUser } from "@/../../hooks/user";
@@ -11,6 +10,7 @@ import { useRouter } from "next/router";
 import { useParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/app/Redux/hooks";
 import { AddProduct } from "../../Redux/Slices/Cart/Cart";
+import { CarouselPlugin } from "@/components/Carosel";
 
 
 export default function Order() {
@@ -32,11 +32,11 @@ export default function Order() {
       <div className="flex flex-col  md:justify-around md:gap-10 md:flex-row  ">
 
 
-        <div className=""> <CarouselDApiDemo/>  </div>
+        <div className=""> {product.product?.images && (<CarouselPlugin slides={product.product?.images as string[]} sizefull={false} /> )} </div>
 
 
           <div className="flex flex-col gap-4 md:w-[40%]">
-            <p className="text-5xl">
+            <p className="text-3xl">
               {product.product?.name}
             </p>
             <div className="flex items-center">
@@ -60,30 +60,7 @@ export default function Order() {
 
               </p>
             </div>
-            <div className="flex gap-10 mt-8">
-              <div className="font-semibold text-xl">Highlights</div>
-              <div className="flex flex-col gap-2">
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>  
-              </div>
-            </div>
-            <div className="flex gap-10 mt-8">
-              <div className="font-semibold text-xl">Highlights</div>
-              <div className="flex flex-col gap-2">
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>  
-              </div>
-            </div>
-            <div className="flex gap-10 mt-8">
-              <div className="font-semibold text-xl">Highlights</div>
-              <div className="flex flex-col gap-2">
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>
-              <div>8 GB RAM | 128 GB ROM</div>  
-              </div>
-            </div>
+            
           </div>
       </div>
     </>

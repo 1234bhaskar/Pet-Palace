@@ -21,7 +21,7 @@ const orderNames:any=[];
          <Table>
       <TableHeader className=''>
         <TableRow className=''>
-          <TableHead className="w-[100px] text-lg">id</TableHead>
+          <TableHead className="w-52 text-lg">Customer Name</TableHead>
           <TableHead className='text-lg'>Product</TableHead>
           <TableHead className='text-lg'>Quantity</TableHead>
           <TableHead className="text-right text-lg">Amount</TableHead>
@@ -30,13 +30,15 @@ const orderNames:any=[];
       <TableBody>
         {orders?.map((order) => (
           <TableRow key={order?.id}>
-            <TableCell className="font-medium">{order?.User?.firstName +" " +order?.User?.lastName}</TableCell>
+            <TableCell className="text-lg">{order?.User?.firstName +" " +order?.User?.lastName}</TableCell>
             <TableCell>{
-             order?.Product?.map((p,index)=>p?.name).join(" , ")
+             <div className='flex flex-col gap-3'>
+              {order?.Product?.map((p,index)=> <div className='flex gap-4'><div className='text-2xl'>{index+1}.</div>  <div className='text-lg'>{p?.name}</div></div>)}
+             </div>
           }
           </TableCell>
-            <TableCell>{order?.quantity}</TableCell>
-            <TableCell className="text-right">{order?.total}</TableCell>
+            <TableCell className='text-lg'>{order?.quantity}</TableCell>
+            <TableCell className="text-right text-lg">$ {order?.total}</TableCell>
           </TableRow>
         ))}
       </TableBody>

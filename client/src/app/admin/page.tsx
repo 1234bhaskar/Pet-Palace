@@ -43,8 +43,8 @@ export default function Admin() {
         { month: "September", sale: 0 },
         { month: "October", sale: 0 },
         { month: "November", sale: 0 },
-        { month: "December", sale: 0 },
-    ]);
+        { month: "December", sale: 0 },
+    ]);
 
 
 
