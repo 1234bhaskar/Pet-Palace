@@ -23,8 +23,8 @@ export default function Categories() {
         <div className='w-full '>
           <div>{CartNumber.length}</div>
             <div className='sm:w-1/4 mx-2 sm:m-0 flex gap-10 my-8 '>
-                {categories.map((e)=>
-                  (<div onClick={()=>dispatch(AddCategories(e.name))} className='flex'><ButtonComponent width={100}  title={e.name}></ButtonComponent></div>)
+                {categories.map((e,index)=>
+                  (<div onClick={()=>dispatch(AddCategories(e.name))} key={index} className='flex'><ButtonComponent width={100}  title={e.name}></ButtonComponent></div>)
                 )}
               </div>
         </div>

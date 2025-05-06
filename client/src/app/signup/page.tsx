@@ -57,7 +57,7 @@ export default function SignUp() {
             toast.error("Verification failed");
             console.error(error);
         } 
-    }, [graphqlClient,value]);
+    }, [value,router]);
 
     const words = ["Delight ", "Treat ", "Comfort ", "Cherish ", "Celebrate "];
 

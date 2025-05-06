@@ -19,6 +19,7 @@ import {persistStore} from "redux-persist"
 
 
 
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -57,7 +58,7 @@ export default function RootLayout({
             <Toaster/>
           </ThemeProvider>
           </GoogleOAuthProvider>
-          <ReactQueryDevtools/>
+          {/* <ReactQueryDevtools/> */}
           </QueryClientProvider>
           </Provider>
       </body>

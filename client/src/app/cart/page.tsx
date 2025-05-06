@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Checkout from "./checkoutbutton";
 import { useCreateOrder } from "../../../hooks/order";
 import { ProductInput } from "../../../gql/graphql";
+import { useRouter  } from 'next/navigation'
 
 interface Productprops {
     id:string,
@@ -22,7 +23,8 @@ interface Productprops {
 
 
 export default function Order() {
-    const {mutate}=useCreateOrder()
+    const router = useRouter()
+    const {  mutateAsync } = useCreateOrder();
     const [products, setProducts] = useState<Productprops[]>([]);
     const CartNumber=useAppSelector(Cart => Cart.Cart.Cart)
     const [TotalPrice, setTotalPrice]=useState<number>(0)
@@ -37,7 +39,7 @@ export default function Order() {
         setTotalPrice(totalPrice);
     },[CartNumber])
     
-    const productsToOrder=useMemo(()=>{
+    useMemo(()=>{
         if(CartNumber){
             const ProdutsCheckout:ProductInput[]=CartNumber.map(cart =>(
                 {
@@ -47,6 +49,8 @@ export default function Order() {
                     id:cart.id
                 }
             ))
+            console.log(productsCheckout);
+            
             setproductsCheckout(ProdutsCheckout)
         }
     },[CartNumber])
@@ -76,12 +80,16 @@ export default function Order() {
         console.log(productsCheckout);
         console.log("totalPrice",TotalPrice);
         
-        mutate({
+        const url=await mutateAsync({
             total:TotalPrice,
             address:"",
             Products:productsCheckout
         })
-    },[products])
+        console.log(url.CreatePayURL);
+        
+        router.push(url.CreatePayURL as string);
+
+    },[TotalPrice,router,mutateAsync,productsCheckout])
 
     const {user}=useGetCurrentUser();
 
@@ -93,7 +101,7 @@ export default function Order() {
 
             <div className="md:grid md:grid-cols-12 md:mt-20" >
                 
-                <div className="md:col-span-8 mr-6">{products.map((product:Productprops,index: number) => ( <div className="flex items-center justify-around"> <ExpandableCardDemo key={index} product={product} /> <div className="text-xl">x{product.quantity}</div> </div> ))}</div>
+                <div className="md:col-span-8 mr-6">{products.map((product:Productprops,index: number) => ( <div key={product.id || index}  className="flex items-center justify-around"> <ExpandableCardDemo key={index} product={product} /> <div className="text-xl">x{product.quantity}</div> </div> ))}</div>
 
                 <div className="md:col-span-4 md:m-6 ">
                     <div className="text-3xl">Total Price</div>

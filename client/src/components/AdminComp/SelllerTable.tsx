@@ -27,9 +27,9 @@ export default function SelllerTable() {
   </TableHeader>
   <TableBody>
     {
-        Seller.sellers?.map((seller)=>{
+        Seller.sellers?.map((seller,index)=>{
             return(
-                <TableRow>
+                <TableRow key={index}>
                 <TableCell className="font-medium"><Image src={seller?.profileImageURL as string} alt='seller' height={20} width={20} className='rounded-sm border border-gray-400'/></TableCell>
                 <TableCell>{seller?.firstName}</TableCell>
                 <TableCell className="text-right">{seller?.createdAt.slice(0, 10) }</TableCell>

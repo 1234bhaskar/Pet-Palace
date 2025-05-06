@@ -18,13 +18,24 @@ export interface CreateProductPayload{
     sellerId:string
 }
 
-export interface CreateOrderItemPayload{
+export interface CreatePayURLPayload{
     total:number
     address:string 
     Products:{
         name:string,
         id:string,
-        price:string,
+        price:number,
+        quantity:number
+    }[]
+}
+export interface CapturePaymentPayload{
+    total:number
+    address:string 
+    OrderId:string
+    Products:{
+        name:string,
+        id:string,
+        price:number,
         quantity:number
     }[]
 }

@@ -44,7 +44,7 @@ import { useAppDispatch } from "@/app/Redux/hooks";
         <DropdownMenuContent className="w-56">  
           <DropdownMenuLabel>Categories</DropdownMenuLabel>
             <div className="flex flex-col ml-5">
-            {categories?.map(categorie => <Link href={`/Search?categories=${categorie?.name}`} onClick={()=>dispatch(AddCategories(categorie?.name as string))} ><DropDownContentcomponent category={categorie?.name as string}/></Link>)}
+            {categories?.map((categorie,index) => <Link href={`/Search?categories=${categorie?.name}`} key={index} onClick={()=>dispatch(AddCategories(categorie?.name as string))} ><DropDownContentcomponent category={categorie?.name as string}/></Link>)}
             </div>
         </DropdownMenuContent>
       </DropdownMenu>

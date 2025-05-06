@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { FaAngleLeft } from "react-icons/fa";
 import { FaAngleRight } from "react-icons/fa";
+import Image from 'next/image'
 
 
 export default function Carousel({
@@ -16,14 +17,14 @@ export default function Carousel({
 
   const prev = () =>
     setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1));
-  const next = () =>
-    setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1));
+  const next = useCallback(() =>
+    setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1)),[slides.length])
 
   useEffect(() => {
     if (!autoSlide) return;
     const slideInterval = setInterval(next, autoSlideInterval);
     return () => clearInterval(slideInterval);
-  }, []);
+  }, [autoSlide,autoSlideInterval,next]);
 
   return (
     <div className="overflow-hidden relative">
@@ -31,8 +32,8 @@ export default function Carousel({
         className="flex transition-transform ease-out duration-500"
         style={{ transform: `translateX(-${curr * 100}%)` }}
       >
-        {slides.map((img) => (
-          <img src={img} alt=""/>
+        {slides.map((img,index) => (
+          <Image src={img} alt="" key={index}/>
         ))}
       </div>
       <div className="absolute inset-0 flex items-center justify-between p-4">
@@ -54,6 +55,7 @@ export default function Carousel({
         <div className="flex items-center justify-center gap-2">
           {slides.map((_, i) => (
             <div
+              key={i}
               className={`
               transition-all w-3 h-3 bg-white rounded-full
               ${curr === i ? "p-2" : "bg-opacity-50"}

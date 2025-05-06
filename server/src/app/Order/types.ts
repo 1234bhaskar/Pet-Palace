@@ -7,9 +7,15 @@ export const types=`#graphql
         quantity: Int!
     }
 
-    input CreatingOrderData{
+    input CreatePayURLPayload{
         total:Int!
         address:String 
+        Products:[ProductInput!]!
+    }
+    input CapturePaymentPayload{
+        total:Int!
+        address:String 
+        OrderId:String!
         Products:[ProductInput!]!
     }
     scalar Date

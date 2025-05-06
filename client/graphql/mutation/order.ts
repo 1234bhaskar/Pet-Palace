@@ -1,8 +1,14 @@
 import {graphql} from "../../gql";
 
-export const createOrderMutation=graphql(`
+export const createPayURLMutation=graphql(`
     #graphql
-    mutation CreateOrder($payload: CreatingOrderData) {
-        CreateOrder(payload: $payload)
+    mutation CreatePayURL($payload: CreatePayURLPayload) {
+        CreatePayURL(payload: $payload)
     }
+`)
+export const CaptureOrderMutation=graphql(`
+    #graphql
+    mutation CaptureOrder($payload: CapturePaymentPayload, $orderId: String) {
+        CaptureOrder(payload: $payload, orderId: $orderId)
+    }   
 `)

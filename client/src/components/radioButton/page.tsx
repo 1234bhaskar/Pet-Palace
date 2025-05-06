@@ -75,7 +75,7 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
         setproductDesc("")
         setImageURLs([])
         setSelectedCategoryIds([])
-    },[productName,productPrice,productStock,selectedCategoryIds,imageURLs])
+    },[productName,productPrice,productStock,selectedCategoryIds,imageURLs,mutate,productDesc])
 
 
     const handlerInputChangeFile = useCallback((input: HTMLInputElement) => {
@@ -132,7 +132,7 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
         input.addEventListener("change", handlerFn);
     
         input.click();
-    }, []);
+    }, [handlerInputChangeFile]);
 
 
     return (
@@ -195,7 +195,7 @@ const CategoryCheckboxes: React.FC<CategoryCheckboxesProps> = ({ categories }) =
             </div>
             <div className="col-span-7">
             <div className="grid grid-cols-3 ">
-                {imageURLs && imageURLs.map(imageURL => { return(<div className="col-span-1"><Image src={imageURL} alt="tweet-image" height={400} width={400}/> </div>)})}
+                {imageURLs && imageURLs.map((imageURL,index) => { return(<div key={index} className="col-span-1"><Image src={imageURL} alt="tweet-image" height={400} width={400}/> </div>)})}
             </div>
             </div>
         </div>

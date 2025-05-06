@@ -11,7 +11,8 @@ interface ProductsDivInterface{
 }
 
 export const ProductsDiv:FC<ProductsDivInterface>=({Searchparams})=> {
-  const SearchProduct = (Searchparams?.length==0)?useGetProductsBySearch(""):useGetProductsBySearch(Searchparams as string);
+  const searchQuery = Searchparams?.length === 0 ? "" : (Searchparams as string);
+  const SearchProduct = useGetProductsBySearch(searchQuery);
       const Selectedcategoies=useAppSelector(categories => categories.Categories.name)
       console.log(Selectedcategoies);
   return (

@@ -21,7 +21,7 @@ import { useGetAllCategory } from "../../../hooks/user";
         <AccordionItem value="item-1">
           <AccordionTrigger>{props.title}</AccordionTrigger>
           <div className="ml-5">
-            {categories?.map((category)=>(<AccordionContentComp category={category?.name as string}/>))}
+            {categories?.map((category,index)=>(<AccordionContentComp key={index} category={category?.name as string}/>))}
           </div>
         </AccordionItem>
       </Accordion>

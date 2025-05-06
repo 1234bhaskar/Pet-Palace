@@ -12,6 +12,8 @@ import SelllerTable from '@/components/AdminComp/SelllerTable';
 import {format, parseISO} from 'date-fns';
 import { CardComponent } from '@/components/card/page';
 import { useGetAllProducts } from '../../../hooks/Products';
+import { ButtonComponent } from '@/components/button';
+import Link from 'next/link';
 
 
 
@@ -78,7 +80,7 @@ const fetchOrder = useCallback(() => {
             setTotalRevenue(totalPrice);
             setNumberofOrder(orders.length)
         }
-    }, [Order]);
+    }, [Order,orders?.length,chartData]);
     
     useEffect(()=>{
         setNumberofSeller(sellers?.length? sellers.length : 0)
@@ -100,6 +102,9 @@ const fetchOrder = useCallback(() => {
                         <TabsTrigger value="account">Analytics</TabsTrigger>
                         <TabsTrigger value="password">Orders</TabsTrigger>
                     </TabsList>
+                    <div>
+                        <Link href={`http://localhost:5173?userid=${localStorage.getItem("_Pet_Palace")}`}><ButtonComponent title='Make Call' /></Link>
+                    </div>
                     </div>
                     <TabsContent value="account">
                         <div className="flex flex-col md:grid md:grid-cols-12">

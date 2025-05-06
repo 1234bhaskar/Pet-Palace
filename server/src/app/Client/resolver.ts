@@ -3,8 +3,12 @@ import { Order } from '../Order';
 import * as dotenv from 'dotenv';
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
+// const { LLMChain} = f("langchain");
+import { ChatGroq } from "@langchain/groq";
 
-import { OpenAIEmbeddings } from "@langchain/openai";
+
+
+import { OpenAIEmbeddings, } from "@langchain/openai";
 import { NeonPostgres } from "@langchain/community/vectorstores/neon";
 
 dotenv.config()
@@ -16,6 +20,13 @@ const embeddings = new GoogleGenerativeAIEmbeddings({
     taskType: TaskType.RETRIEVAL_DOCUMENT,
     title: "Document title",
   });
+  const llm = new ChatGroq({
+    apiKey:process.env.Grok_API_KEY,
+    model: "mixtral-8x7b-32768",
+    temperature: 0
+  });
+
+  
   type Producttype = {
     id: string;
     name: string;
@@ -132,15 +143,18 @@ const queries={
                 };
               });
           
-              console.log(modifiedProducts);
+            //   console.log(modifiedProducts);
         
         if(searchTerm.length>=3){
             const vectorStore = await NeonPostgres.initialize(embeddings, {
                 connectionString: process.env.DATABASE_URL as string,
               });
+              
+              console.log(vectorStore.toJSON());
     
             try{
                 const resultOne = await vectorStore.similaritySearch(searchTerm,4);
+                
                 const vectorProducts:Producttype[]=resultOne.filter((doc)=>{
                     if(modifiedProducts.some((product)=>product.id===doc.metadata.id)){
                         return false
@@ -149,28 +163,21 @@ const queries={
                         return true
                     }
                 }).map((doc) =>({
-                    id: doc.metadata.id as string, // Ensure id is a string
+                    id: doc.metadata.id as string,
                     name: doc.pageContent as string,
                     description: doc.metadata.description as string|null,
-                    price: parseFloat(doc.metadata.price) || 0,  // Convert price to a number
+                    price: parseFloat(doc.metadata.price) || 0, 
                     stock: doc.metadata.stock as boolean,
                     categories:doc.metadata.categories as string[],
-                    createdAt: new Date(doc.metadata.createdAt) as Date, // Convert to Date object
-                    updatedAt: new Date(doc.metadata.updatedAt) as Date, // Convert to Date object
-                    images: doc.metadata.images as string[],  // Ensure images is an array of strings
-                    sellerId: doc.metadata.sellerId as string, // Ensure sellerId is a string
+                    createdAt: new Date(doc.metadata.createdAt) as Date,
+                    updatedAt: new Date(doc.metadata.updatedAt) as Date,
+                    images: doc.metadata.images as string[],  
+                    sellerId: doc.metadata.sellerId as string, 
                 }))
-                console.log(vectorProducts);
+                // console.log(vectorProducts);
                 modifiedProducts.push(...vectorProducts)
                 return modifiedProducts
-                const finalresult=products.filter((product)=>{
-                    if(resultOne.some((doc)=>doc.metadata.id===product.id)){
-                        return true
-                    }
-                    else{
-                        return false
-                    }
-                })
+
                 
             }
             catch(e){

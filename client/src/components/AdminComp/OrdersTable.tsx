@@ -33,7 +33,7 @@ const orderNames:any=[];
             <TableCell className="text-lg">{order?.User?.firstName +" " +order?.User?.lastName}</TableCell>
             <TableCell>{
              <div className='flex flex-col gap-3'>
-              {order?.Product?.map((p,index)=> <div className='flex gap-4'><div className='text-2xl'>{index+1}.</div>  <div className='text-lg'>{p?.name}</div></div>)}
+              {order?.Product?.map((p,index)=> <div key={index} className='flex gap-4'><div className='text-2xl'>{index+1}.</div>  <div className='text-lg'>{p?.name}</div></div>)}
              </div>
           }
           </TableCell>

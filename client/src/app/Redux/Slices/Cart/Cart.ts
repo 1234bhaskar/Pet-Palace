@@ -45,11 +45,15 @@ export const CartSlice=createSlice({
                     state.splice(index, 1); 
                 }
             }
+        },
+        RemoveAllProduct:(state)=>{
+            state=[]
+            return state
         }
     }
 })
 
-export const {AddProduct,RemoveProduct}=CartSlice.actions
+export const {AddProduct,RemoveProduct,RemoveAllProduct}=CartSlice.actions
 
 export default CartSlice.reducer
 

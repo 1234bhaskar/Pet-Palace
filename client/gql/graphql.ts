@@ -17,13 +17,20 @@ export type Scalars = {
   Date: { input: any; output: any; }
 };
 
+export type CapturePaymentPayload = {
+  OrderId: Scalars['String']['input'];
+  Products: Array<ProductInput>;
+  address?: InputMaybe<Scalars['String']['input']>;
+  total: Scalars['Int']['input'];
+};
+
 export type Category = {
   __typename?: 'Category';
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
 };
 
-export type CreatingOrderData = {
+export type CreatePayUrlPayload = {
   Products: Array<ProductInput>;
   address?: InputMaybe<Scalars['String']['input']>;
   total: Scalars['Int']['input'];
@@ -39,13 +46,20 @@ export type CreatingProductData = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  CreateOrder?: Maybe<Scalars['Boolean']['output']>;
+  CaptureOrder?: Maybe<Scalars['Boolean']['output']>;
+  CreatePayURL?: Maybe<Scalars['String']['output']>;
   createProduct: Scalars['Boolean']['output'];
 };
 
 
-export type MutationCreateOrderArgs = {
-  payload?: InputMaybe<CreatingOrderData>;
+export type MutationCaptureOrderArgs = {
+  orderId?: InputMaybe<Scalars['String']['input']>;
+  payload?: InputMaybe<CapturePaymentPayload>;
+};
+
+
+export type MutationCreatePayUrlArgs = {
+  payload?: InputMaybe<CreatePayUrlPayload>;
 };
 
 
@@ -131,12 +145,20 @@ export type User = {
   profileImageURL?: Maybe<Scalars['String']['output']>;
 };
 
-export type CreateOrderMutationVariables = Exact<{
-  payload?: InputMaybe<CreatingOrderData>;
+export type CreatePayUrlMutationVariables = Exact<{
+  payload?: InputMaybe<CreatePayUrlPayload>;
 }>;
 
 
-export type CreateOrderMutation = { __typename?: 'Mutation', CreateOrder?: boolean | null };
+export type CreatePayUrlMutation = { __typename?: 'Mutation', CreatePayURL?: string | null };
+
+export type CaptureOrderMutationVariables = Exact<{
+  payload?: InputMaybe<CapturePaymentPayload>;
+  orderId?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type CaptureOrderMutation = { __typename?: 'Mutation', CaptureOrder?: boolean | null };
 
 export type CreateProductMutationVariables = Exact<{
   payload: CreatingProductData;
@@ -201,7 +223,8 @@ export type GetAllCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetAllCategoriesQuery = { __typename?: 'Query', getAllCategories?: Array<{ __typename?: 'Category', name?: string | null } | null> | null };
 
 
-export const CreateOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatingOrderData"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"CreateOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<CreateOrderMutation, CreateOrderMutationVariables>;
+export const CreatePayUrlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreatePayURL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatePayURLPayload"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"CreatePayURL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<CreatePayUrlMutation, CreatePayUrlMutationVariables>;
+export const CaptureOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CaptureOrder"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CapturePaymentPayload"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"CaptureOrder"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}},{"kind":"Argument","name":{"kind":"Name","value":"orderId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderId"}}}]}]}}]} as unknown as DocumentNode<CaptureOrderMutation, CaptureOrderMutationVariables>;
 export const CreateProductDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateProduct"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"payload"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreatingProductData"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createProduct"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"payload"},"value":{"kind":"Variable","name":{"kind":"Name","value":"payload"}}}]}]}}]} as unknown as DocumentNode<CreateProductMutation, CreateProductMutationVariables>;
 export const GetAllOrderDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllOrder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllOrder"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"Product"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"total"}},{"kind":"Field","name":{"kind":"Name","value":"quantity"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<GetAllOrderQuery, GetAllOrderQueryVariables>;
 export const GetAllSellersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllSellers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllSellers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"profileImageURL"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]} as unknown as DocumentNode<GetAllSellersQuery, GetAllSellersQueryVariables>;

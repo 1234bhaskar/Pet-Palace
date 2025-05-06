@@ -16,6 +16,25 @@ interface GoogleTokenResult {
 }
 
 const queries={
+    myRole:async(parent:any,{Usertoken}:{Usertoken:string})=>{
+        if(!Usertoken){
+            return "no_User"
+        }
+            const user = await JWTService.decodeToken(Usertoken) ; // Await the promise here
+            const id=user?.id
+        try{
+            const role=await prismaClient.user.findUnique({
+                where:{
+                    id:id
+                }
+            })
+            return role?.role
+        }
+        catch{
+            return "no_User"
+        }
+    },
+
     verifyGoogleToken:async(parent:any,{token,role}:{token:string,role:string})=>{
         if(!role) {
             throw new Error("Give Role")

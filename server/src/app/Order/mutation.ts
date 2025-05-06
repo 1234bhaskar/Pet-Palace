@@ -1,3 +1,4 @@
 export const mutation=`#graphql
-    CreateOrder(payload:CreatingOrderData):Boolean
+    CreatePayURL(payload:CreatePayURLPayload):String
+    CaptureOrder(payload:CapturePaymentPayload,orderId:String):Boolean
 `

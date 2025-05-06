@@ -1,9 +1,10 @@
 import { PrismaClient,Order } from '@prisma/client'
-import { CreateOrderItemPayload, GraphqlContext } from '../../interface'
+import { CapturePaymentPayload, CreatePayURLPayload, GraphqlContext } from '../../interface'
 const prisma = new PrismaClient()
 import axios from "axios"
 import * as dotenv from "dotenv"
 import { json } from 'body-parser'
+import { application } from 'express'
 
 dotenv.config()
 
@@ -32,12 +33,12 @@ const queries={
 }
 
 const mutations={
-    CreateOrder:async(parent:any,{payload}:{payload:CreateOrderItemPayload},ctx:GraphqlContext)=>{
+    CreatePayURL:async(parent:any,{payload}:{payload:CreatePayURLPayload},ctx:GraphqlContext)=>{
         // console.log("payload",payload);
         
-        if(!ctx.user){
-            throw new Error('User is not logged in')
-        }
+        // if(!ctx.user){
+        //     throw new Error('User is not logged in')
+        // }
         if(!payload){
             throw new Error('Payload undefined')
         }
@@ -48,18 +49,18 @@ const mutations={
                     throw new Error(`Invalid product data: ${JSON.stringify(product)}`);
                 }
                 return {
-                    name: product.name,
+                    name: product.name.substring(0, 127),
                     unit_amount: {
                         currency_code: "USD",
-                        value: product.price
+                        value: product.price.toFixed(2)
                     },
                     quantity: product.quantity.toString()
                 };
             });
-            console.log(items);
+            // console.log(items);
             
                 const res=await axios({
-                    url:"https://api-m.sandbox.paypal.com"+"/v2/checkout/orders",
+                    url:"https://api-m.sandbox.paypal.com/v2/checkout/orders",
                     method:"post",
                     headers:{
                         "Content-Type":"application/json",
@@ -79,17 +80,19 @@ const mutations={
                                             value: payload.total.toFixed(2)
                                         }
                                     }
-                                },
-                                shipping: {
-                                    address: {
-                                        address_line_1: payload.address
-                                    }
                                 }
                             }
-                        ]
+                        ],
+                        application_context:{
+                            return_url:"http://localhost:3000/Success",
+                            cancel_url:"http://localhost:3000/Fail"
+                        }
                     })
                 })
-                console.log(res.data);
+                // console.log(res.data);
+                const response= res.data.links.find((link: any) => link.rel==='approve').href
+                // console.log(response);
+                return response
         }
         catch(e){
             console.log("error in payment",e)
@@ -116,6 +119,45 @@ const mutations={
         //     console.error(e);
         //     return false;
         // }
+    },
+    CaptureOrder:async(parent:any,{payload}:{payload:CapturePaymentPayload},ctx:GraphqlContext)=>{
+        // console.log("https://api-m.sandbox.paypal.com"+`/v2/checkout/orders/${payload.OrderId}/capture`);
+        console.log(payload.Products);
+        
+        if(!ctx.user){
+            throw new Error("Not Authenticated")
+        }
+        try{
+            const access_token=await generate_PayPal_Token();
+            console.log(`Bearer access_token${access_token}`);
+            
+            const response=await axios({
+                url:"https://api-m.sandbox.paypal.com"+`/v2/checkout/orders/${payload.OrderId}/capture`,
+                method:"post",
+                    headers:{
+                        "Content-Type":"application/json",
+                        "Authorization":`Bearer ${access_token}`
+                    }
+            })
+            await prisma.order.create({
+                data:{
+                    total:payload.total,
+                    address:payload.address,
+                    products: {
+                        connect: payload.Products.map(product => ({ id:product.id })),
+                    },
+                    userId:ctx.user.id,
+                    quantity:payload.Products.length
+                }
+            })
+            // console.log(response.data);
+            return true
+        }
+        catch(e){
+            console.log(e);
+            
+            throw new Error("error in Capture")
+        }
     }
 }
 
